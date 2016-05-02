@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" ng-app="QuizApp" ng-controller="HtmlCtrl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <base href="{{basePath}}">
+    <link href="lib/honoka/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <title>クイズアプリ</title>
+    <script src="lib/jquery/jquery-1.12.3.min.js"></script>
+    <script src="lib/honoka/js/bootstrap.min.js"></script>
+    <script src="lib/angular-1.5.5/angular.js"></script>
+    <script src="lib/angular-1.5.5/angular-route.js"></script>
+    <script src="lib/phina.js-develop/build/phina.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/app.0.js"></script>
+    <script src="js/app.config.js"></script>
+  </head>
+  <body ng-controller="UserCtrl as user"
+    <div ng-controller="MainCtrl as main">
+      <header class="container">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header">
+            <a href="{{basePath}}main" class="navbar-brand">クイズアプリ</a>
+          </div>
+          <div class="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{basePath}}about">このサイトについて</a></li>
+              <li><a href="{{basePath}}squiz">学習開始</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.data.name}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{basePath}}user/login">ログイン</a></li>
+                  <li><a href="{{basePath}}user/{{user.data.id}}/logout">ログアウト</a></li>
+                  <li><a href="{{basePath}}user/{{user.data.name}}/config">設定</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      
+      <div ng-view></div>
+      
+      <nav class="navbar navbar-default navbar-fixed-bottom" style="min-height:0px;">
+        <div class="container">
+          <p>&copy; だって好きだし(Sily) 2016</p>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>
