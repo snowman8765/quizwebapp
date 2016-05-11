@@ -20,6 +20,7 @@ quizApp.run(function($ionicPlatform) {
 
 quizApp.controller('HtmlCtrl', function($scope) {
     this.basePath = window.location.pathname;
+    console.log(this.basePath);
 });
 
 quizApp.controller('MainCtrl', ['$route', '$routeParams', '$location',
