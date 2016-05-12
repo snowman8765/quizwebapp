@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
   
   .state('tab.logout', {
-    url: '/logout/:id',
+    url: '/logout',
     views: {
       'tab-logout': {
         redirectTo: '/',

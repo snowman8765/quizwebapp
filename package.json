@@ -1,8 +1,9 @@
 {
   "name": "quizwebapp2",
   "version": "1.1.1",
-  "description": "testquiz: An Ionic project",
+  "description": "quizwebapp2: An Ionic project",
   "dependencies": {
+    "express": "^4.13.4",
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
     "gulp-concat": "^2.2.0",
