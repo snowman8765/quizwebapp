@@ -1,13 +1,4 @@
-/* Empty. Add your own CSS if you like */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
-* {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, "Arial", "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
-}
-
-code,
-kbd,
-pre,
-samp {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+body {
+  min-height: 2000px;
+  padding-top: 70px;
 }
