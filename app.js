@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var quiz = require('./routes/quiz');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'www')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/quiz', quiz);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,19 +63,19 @@ module.exports = app;
 
 
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('my.db');
+var db = new sqlite3.Database('data/my.db');
 
 db.serialize(function() {
   //db.run("CREATE TABLE lorem (info TEXT)");
 
   var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
   for (var i = 0; i < 10; i++) {
-      stmt.run("Ipsum " + i);
+      //stmt.run("Ipsum " + i);
   }
   stmt.finalize();
 
   db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-      console.log(row.id + ": " + row.info);
+      //console.log(row.id + ": " + row.info);
   });
 });
 

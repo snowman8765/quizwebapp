@@ -1,0 +1,12 @@
+extends ../layout/login
+
+block content
+  ul.list-group
+    each item in list
+      a.list-group-item(href='/quiz/book/#{item.id}/')
+        h4
+          span.glyphicon.glyphicon-book(aria-hidden='true')
+          | &nbsp;#{item.title}
+        | #{item.comment}
+        span.badge 更新：#{item.updatetime}
+        

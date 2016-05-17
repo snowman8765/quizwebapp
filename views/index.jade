@@ -1,8 +1,30 @@
-extends layout
+extends layout/login
 
 block content
-  div.panel.panel-default
-    div.panel-heading
-      span Panel title
-    div.panel-body
-      span Panel content
+  .panel.panel-danger
+    .panel-heading
+      span.glyphicon.glyphicon-exclamation-sign
+      | 最初に
+    .panel-body
+      | これはオンライン上でクイズ形式の問題を解答することで学習するためのアプリケーションです。
+      br
+      | 誰(非ログイン)でも問題に解答することができますが、ユーザ登録することで成績を記録することができ、他のユーザと成績を競ったり学習状況を把握することができます。
+      br
+      | 問題を作成することも可能ですが、作成するためにはまず権限を得る申請が必要になります。
+
+  ul.list-group
+    a.list-group-item(href='/login')
+      span.glyphicon.glyphicon-user(aria-hidden='true')
+      | ログイン
+    a.list-group-item(href='/signup')
+      span.glyphicon.glyphicon-plus-sign(aria-hidden='true')
+      | 新規登録
+  .panel.panel-primary
+    .panel-heading
+      span.glyphicon.glyphicon-info-sign
+      | 新着情報
+    ul.list-group
+      a.list-group-item.list-group-item-success(href='/info') success
+      a.list-group-item.list-group-item-info(href='/info') info
+      a.list-group-item.list-group-item-warning(href='/info') warning
+      a.list-group-item.list-group-item-danger.hidden(href='/info') danger
