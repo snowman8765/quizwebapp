@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cacheManifest = require('connect-cache-manifest');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -26,6 +27,23 @@ app.use(express.static(path.join(__dirname, 'www')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/quiz', quiz);
+
+app.use(cacheManifest({
+  manifestPath: '/quizwebapp2.manifest',
+  cdn: ['https://fonts.googleapis.com/css?family=Open+Sans'],
+  files: [{
+    dir: __dirname + '/www/js',
+    prefix: '/js/'
+  },{
+    dir: __dirname + '/www/css',
+    prefix: '/css/'
+  },{
+    dir: __dirname + '/www/lib',
+    prefix: '/lib/'
+  }],
+  networks: ['*'],
+  fallbacks: []
+}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

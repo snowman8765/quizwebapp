@@ -69,4 +69,20 @@ router.get('/genre/:id/', function(req, res, next) {
   });
 });
 
+router.get('/single/:id/', function(req, res, next) {
+  db.serialize(function(){
+    db.all("SELECT id, title, comment, createtime, updatetime, answer, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id="+req.params.id, function(err, rows){
+      if (!err) {
+        res.render('quiz/single', {
+          data: rows,
+          pretty: true
+        }); 
+      }
+      else {
+        console.log(err);
+      }   
+    });
+  });
+});
+
 module.exports = router;

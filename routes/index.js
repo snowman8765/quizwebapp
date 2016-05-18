@@ -8,11 +8,17 @@ var db = new sqlite3.Database('data/quiz.db');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', pretty: true });
+  res.render('index', { pretty: true });
 });
 
 router.get('/about', function(req, res, next) {
+  console.log(req.path);
   res.render('about', { pretty: true });
+});
+
+router.get('/info', function(req, res, next) {
+  console.log(req.path);
+  res.render('info', { pretty: true });
 });
 
 router.get('/login', function(req, res, next) {

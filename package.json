@@ -15,6 +15,17 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
-    "sqlite3": "^3.1.4"
+    "sqlite3": "^3.1.4",
+    "connect-cache-manifest": "*"
+  },
+  "devdependencies": {
+    "gulp": "*",
+    "gulp-nodemon": "*",
+    "browser-sync": "*"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.12.8",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.0.7"
   }
 }

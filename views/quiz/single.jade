@@ -1,0 +1,9 @@
+extends ../layout/quiz
+
+block content
+  canvas#world
+    script.
+      var BACK_GROUND = "http://jsrun.it/assets/g/p/T/k/gpTkS.png";
+      var TOMAPIKO = 'http://jsrun.it/assets/c/s/p/z/cspzI.png';
+      var QUIZ_DATA = !{JSON.stringify(data)};//{id:#{data[0].id}};
+  script(src="/js/quiz.test.js")

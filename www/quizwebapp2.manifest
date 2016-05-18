@@ -1,0 +1,22 @@
+CACHE MANIFEST
+
+# キャッシュマニフェストの明示的セクションに切り替えます。これは既定のセクションです。
+CACHE:
+/lib/jquery/jquery-2.2.3.min.js
+/lib/honoka/css/bootstrap.min.css
+/lib/honoka/js/bootstrap.min.js
+/lib/honoka/fonts/glyphicons-halflings-regular.woff2
+/lib/honoka/fonts/glyphicons-halflings-regular.woff
+/lib/honoka/fonts/glyphicons-halflings-regular.ttf
+/lib/phina/phina.min.js
+# /css/style.css
+# /css/index.css
+# /js/index.js
+# /js/quiz.test.js
+
+# キャッシュマニフェストのオンラインホワイトリストセクションに切り替えます。
+NETWORK:
+*
+
+# キャッシュマニフェストの代替セクションに切り替えます。
+FALLBACK:
