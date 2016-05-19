@@ -1,10 +1,12 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cacheManifest = require('connect-cache-manifest');
+var passport = require("passport");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -23,6 +25,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'www')));
+
+app.use(session({ secret: 'secret snowman' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -76,25 +82,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
-
-
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('data/my.db');
-
-db.serialize(function() {
-  //db.run("CREATE TABLE lorem (info TEXT)");
-
-  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-  for (var i = 0; i < 10; i++) {
-      //stmt.run("Ipsum " + i);
-  }
-  stmt.finalize();
-
-  db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-      //console.log(row.id + ": " + row.info);
-  });
-});
-
-db.close();

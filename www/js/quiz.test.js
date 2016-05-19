@@ -5,13 +5,107 @@ phina.globalize();
 var ASSETS = {
   image: {},
   font: {
-    //'honoka': 'https://fonts.googleapis.com/css?family=Lobster'
+    'honoka': 'https://fonts.googleapis.com/css?family=Lobster'
   },
   sound: {},
   script: {}
 };
-var SCREEN_WIDTH =640;
+
+var SCREEN_WIDTH = 640;
 var SCREEN_HEIGHT = 960;
+var TITLE_WIDTH = SCREEN_WIDTH - 10;
+var TITLE_HEIGHT = SCREEN_HEIGHT / 16;
+var SPACE_HEIGHT = TITLE_HEIGHT / 2;
+
+phina.define('TitleArea', {  
+  superClass: 'RectangleShape',
+
+  init: function(title) {
+    this.superInit({
+        width: TITLE_WIDTH,
+        height: TITLE_HEIGHT,
+        fill: "#ffccff",
+        stroke: null,
+        cornerRadius: 8
+    });
+    
+    var title = Label({
+      text: title,
+      fontSize: 60,
+      fontFamily: "honoka",
+      textAlign: "center"
+    }).addChildTo(this);
+  }
+});
+
+phina.define('QuizArea', {  
+  superClass: 'RectangleShape',
+
+  init: function(title) {
+    this.superInit({
+        width: SCREEN_WIDTH - 10,
+        height: SCREEN_HEIGHT/2 - TITLE_HEIGHT,
+        fill: "#ccccff",
+        stroke: null,
+        cornerRadius: 8
+    });
+    
+    var title = Label({
+      text: title,
+      fontSize: 48,
+      fontFamily: "honoka",
+      textAlign: "center"
+    }).addChildTo(this);
+  }
+});
+
+phina.define('AnswerArea', {  
+  superClass: 'RectangleShape',
+
+  init: function(answer, scene) {
+    this.superInit({
+      width: SCREEN_WIDTH - 10,
+      height: SCREEN_HEIGHT/2 - SPACE_HEIGHT*2,
+      fill: "#88ff88",
+      stroke: null,
+      cornerRadius: 8
+    });
+    
+    var temp_num = answer.length+1;
+    var col = 2;
+    var row = parseInt(temp_num/2);
+    console.log("ans:"+answer.length+",col:"+col+",row:"+row);
+    this.group = DisplayElement().addChildTo(this);
+    this.gridX = Grid(this.width, col);
+    this.gridY = Grid(this.height, row);
+    
+    var btnHeight = 0;
+    for(var ans in answer) {
+      var selButton = Button({
+        width: this.width/col - 10,
+        height: this.height/row - 16,
+        text: answer[ans],
+        fontSize: 36,
+        textAlign: "left"
+      }).addChildTo(this.group);
+      selButton.setPosition(this.gridX.span(ans%2), this.gridY.span(parseInt(ans/2)));
+      selButton.id = parseInt(ans)+1;
+      selButton.setInteractive(true);
+      selButton.on('pointend', function() {
+        console.log("clicked:"+this.id);
+        scene.exit({your_answer:this.id});
+      }, selButton);
+      btnHeight = selButton.height;
+    }
+    if(answer.length <= 2) {
+      this.group.setPosition(-this.gridX.center()/2, 0);
+    } else if(answer.length <= 4) {
+      this.group.setPosition(-this.gridX.center()/2, -this.gridY.center()/2);
+    } else {
+      this.group.setPosition(-this.gridX.center()/2, -this.gridY.center()/2-btnHeight/row+16/2);
+    }
+  }
+});
 
 //============================================
 // タイトルシーン
@@ -22,159 +116,37 @@ phina.define('MyTitleScene', {
   init: function() {
     this.superInit();
     
-    var titleArea = RectangleShape(
-      {
-        width: SCREEN_WIDTH - 10,
-        height: SCREEN_HEIGHT/16,
-        fill: "#ffccff",
-        stroke: null,
-        cornerRadius: 8,
-      }
-    ).addChildTo(this);
-    titleArea.x = this.gridX.center();
-    titleArea.y = titleArea.height/2;
+    this.setInteractive(false)
     
-    var title = Label({
-      text:QUIZ_DATA[0].title,
-      fontSize:40,
-      fontFamily:"honoka",
-      textAlign: "center"
-    }).addChildTo(titleArea);
-    //title.x = this.gridX.center();
-    //title.y = this.gridY.center()-SCREEN_HEIGHT/4;
+    var titleArea = TitleArea(QUIZ_DATA.title).addChildTo(this);
+    titleArea.setPosition(
+      this.gridX.center(),
+      titleArea.height/2
+    );
     
-    var qArea = RectangleShape(
-      {
-        width: SCREEN_WIDTH - 10,
-        height: SCREEN_HEIGHT/2 - titleArea.height,
-        fill: "#ccccff",
-        stroke: null,
-        cornerRadius: 8,
-      }
-    ).addChildTo(this);
-    qArea.x = this.gridX.center();
-    qArea.y = SCREEN_HEIGHT/2 - qArea.height/2 + titleArea.height/2;
+    var qArea = QuizArea("aaaaaaaaaaa\nbbbbbbbbbbbbb\nccccccccccccccc").addChildTo(this);// QuizArea(qData.comment);
+    qArea.setPosition(
+      this.gridX.center(),
+      this.gridY.center() - qArea.height/2 + SPACE_HEIGHT
+    );
     
-    var qComment = Label({
-      //text:QUIZ_DATA[0].comment,
-      text:"aaaaaaaaaaa\nbbbbbbbbbbbbb\nccccccccccccccc",
-      fontSize:40,
-      fontFamily:"honoka",
-      textAlign: "left"
-    }).addChildTo(qArea);
-    //qComment.x = this.gridX.center();
-    //qComment.y = this.gridY.center()+SCREEN_HEIGHT/4;
-    
-    var selectArea = RectangleShape(
-      {
-        width: SCREEN_WIDTH - 10,
-        height: SCREEN_HEIGHT/2 - titleArea.height,
-        fill: "#88ff88",
-        stroke: null,
-        cornerRadius: 8,
-      }
-    ).addChildTo(this);
-    selectArea.x = this.gridX.center();
-    selectArea.y = SCREEN_HEIGHT/2 + selectArea.height/2 + titleArea.height;
-    
-    
-    var qGroup = DisplayElement().addChildTo(selectArea);
-    //qGroup.setPosition(-selectArea.width/4,-selectArea.height/4);
-    var qGridX = Grid({
-      width: selectArea.width,
-      columns: 3
-    });
-    var qGridY = Grid({
-      width: selectArea.height,
-      columns: 2
-    });
-    var selectButton = [
-      Button({
-        text:QUIZ_DATA[0].select1,
-        fontSize:40,
-        textAlign: "left"
-      }),
-      Button({
-        text:QUIZ_DATA[0].select2,
-        fontSize:40,
-        textAlign: "left"
-      }),
-      Button({
-        text:QUIZ_DATA[0].select3,
-        fontSize:40,
-        textAlign: "left"
-      }),
-      Button({
-        text:QUIZ_DATA[0].select4,
-        fontSize:40,
-        textAlign: "left"
-      }),
-      Button({
-        text:QUIZ_DATA[0].select5,
-        fontSize:40,
-        textAlign: "left"
-      }),
-      Button({
-        text:QUIZ_DATA[0].select6,
-        fontSize:40,
-        textAlign: "left"
-      })
+    var tempList = [
+      QUIZ_DATA.select1,
+      QUIZ_DATA.select2,
+      QUIZ_DATA.select3,
+      QUIZ_DATA.select4,
+      QUIZ_DATA.select5,
+      QUIZ_DATA.select6
     ];
-    var i=0,j=0,k=0;
-    Array.range(3).each(function(spanY) {
-      Array.range(2).each(function(spanX) {
-        var button = selectButton[k++];
-        button.addChildTo(qGroup);
-        button.setPosition(qGridX.span(spanX), qGridY.span(spanY));
-      });
-    });
-    
-    //console.log(QUIZ_DATA[0]);
+    var selectList = $.grep(tempList, function(e){return e;}); // 空要素の削除
+    var selectArea = AnswerArea(selectList, this).addChildTo(this);
+    selectArea.setPosition(
+      this.gridX.center(),
+      this.gridY.center() + qArea.height/2 + SPACE_HEIGHT*2
+    );
   },
 
   update: function(app) {
-  },
-  
-  onclick:function(){
-    //次のシーンへ移動
-    this.exit();
-  }
-});
-
-
-//============================================
-// メインシーン
-//============================================
-phina.define('MyMainScene', {
-  superClass: 'DisplayScene',
-  
-  init: function() {
-    this.superInit();
-    
-    var gx = this.gridX;
-    var gy = this.gridY;
-    
-    var circle = CircleShape().addChildTo(this);
-    circle.setPosition(gx.center(-4), gy.center(-2));
-    
-    var rect = RectangleShape().addChildTo(this);
-    rect.setPosition(gx.center(), gy.center(-2));
-    
-    var triangle = TriangleShape().addChildTo(this);
-    triangle.setPosition(gx.center(4), gy.center(-2));
-    
-    var plygon = PolygonShape().addChildTo(this);
-    plygon.setPosition(gx.center(-4), gy.center(2));
-    
-    var star = StarShape().addChildTo(this);
-    star.setPosition(gx.center(0), gy.center(2));
-    
-    var heart = HeartShape().addChildTo(this);
-    heart.setPosition(gx.center(4), gy.center(2));
-  },
-  onclick:function(){
-    //次のシーンへ移動
-    this.exit();
   }
 });
 
@@ -184,13 +156,32 @@ phina.define('MyMainScene', {
 phina.define('MyResultScene', {
   superClass: 'DisplayScene',
   
-  init: function() {
+  jsonData:null,
+  
+  init: function(param) {
     this.superInit();
     
-    var label = Label('MyResultScene').addChildTo(this);
-    label.x = this.gridX.center();
-    label.y = this.gridY.center();
+    var self = this;
+    
+    $.getJSON("/quiz/single/answer/"+QUIZ_DATA.id,
+      {
+        answer: param.your_answer,
+        user_id: ""
+      },
+      function(json){
+        console.log(json);
+        self.jsonData = json;
+        self.label.text = "answer="+json.comment;
+      }
+    );
+    this.label = Label("zzz").addChildTo(this);
+    this.label.x = this.gridX.center();
+    this.label.y = this.gridY.center();
   },
+
+  update: function(app) {
+  },
+  
   onclick:function(){
     //次のシーンへ移動
     this.exit();
@@ -209,17 +200,13 @@ phina.define('MyManagerScene' , {
         {
           className: 'MyTitleScene',
           label: 'title',
-          nextLabel: 'main',
-        },
-        {
-          className: 'MyMainScene',
-          label: 'main',
           nextLabel: 'result',
         },
         {
           className: 'MyResultScene',
           label: 'result',
           nextLabel: 'title',
+          arguments: {}
         },
       ]
     });
@@ -230,9 +217,12 @@ phina.main(function() {
   var app = GameApp({
     startLabel: 'title',
     assets: ASSETS,       // アセット読み込み
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
   });
   
   app.replaceScene(MyManagerScene());
   
+  app.fps = 30;
   app.run();
 });
