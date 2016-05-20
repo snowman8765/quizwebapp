@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
-var debug_db = new sqlite3.Database('data/debug.db');
 var db = new sqlite3.Database('data/quiz.db');
 
 router.get('/', function(req, res, next) {
@@ -9,6 +8,8 @@ router.get('/', function(req, res, next) {
     db.all("SELECT * FROM table_count", function(err, rows){
       if (!err) {
         res.render('quiz/index', {
+          user: req.user,
+          path: req.path,
           result: rows,
           pretty: true
         });
@@ -20,11 +21,13 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/book/:id/', function(req, res, next) {
+router.get('/book/:id', function(req, res, next) {
   db.serialize(function(){
     db.all("SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE id="+req.params.id, function(err, rows){
       if (!err) {
         res.render('quiz/book_detail', {
+          user: req.user,
+          path: req.path,
           list: rows,
           pretty: true
         });
@@ -41,6 +44,8 @@ router.get('/genre/list', function(req, res, next) {
     db.all("SELECT id, title, comment, createtime, updatetime FROM q_genre", function(err, rows){
       if (!err) {
         res.render('quiz/genre_list', {
+          user: req.user,
+          path: req.path,
           list: rows,
           pretty: true
         });
@@ -52,11 +57,13 @@ router.get('/genre/list', function(req, res, next) {
   });
 });
 
-router.get('/genre/:id/', function(req, res, next) {
+router.get('/genre/:id', function(req, res, next) {
   db.serialize(function(){
     db.all("SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE q_genre_id="+req.params.id, function(err, rows){
       if (!err) {
         res.render('quiz/genre_detail', {
+          user: req.user,
+          path: req.path,
           list: rows,
           pretty: true
         }); 
@@ -68,11 +75,13 @@ router.get('/genre/:id/', function(req, res, next) {
   });
 });
 
-router.get('/single/:id/', function(req, res, next) {
+router.get('/single/:id', function(req, res, next) {
   db.serialize(function(){
     db.get("SELECT id, title, comment, createtime, updatetime, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id="+req.params.id, function(err, rows){
       if (!err) {
         res.render('quiz/single', {
+          user: req.user,
+          path: req.path,
           data: rows,
           pretty: true
         });
@@ -84,7 +93,7 @@ router.get('/single/:id/', function(req, res, next) {
   });
 });
 
-router.get('/single/answer/:id/', function(req, res, next) {
+router.get('/single/answer/:id', function(req, res, next) {
   db.serialize(function(){
     db.get("SELECT id, title, comment, createtime, updatetime, answer, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id="+req.params.id, function(err, rows){
       if (!err) {
