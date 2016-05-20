@@ -26,4 +26,13 @@ nav.navbar.navbar-default.navbar-static-top.bg-primary
             a(href='/users/logout')
               span.glyphicon.glyphicon-log-out(aria-hidden='true')
               | ログアウト
-        
+              
+              
+p 1 + 2 = {{ 1 + 2 }}
+
+div(ng-view)
+
+ul
+  li(ng-repeat="phone in phones")
+    span {{phone.name}}
+    p {{phone.snippet}}
