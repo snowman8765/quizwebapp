@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/book/:id', function(req, res, next) {
+router.get('/book/list', function(req, res, next) {
   db.serialize(function(){
     db.all("SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE id="+req.params.id, function(err, rows){
       if (!err) {
@@ -36,6 +36,27 @@ router.get('/book/:id', function(req, res, next) {
         console.log(err);
       }
     });
+  });
+});
+
+router.get('/book/one/:id', function(req, res, next) {
+  db.serialize(function(){
+    db.get("SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE id="+req.params.id, function(err, rows){
+      if (!err) {
+        res.json(rows);
+      }
+      else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+router.get('/book/start', function(req, res, next) {
+  res.render('quiz/start_book', {
+    user: req.user,
+    path: req.path,
+    pretty: true
   });
 });
 
@@ -57,16 +78,19 @@ router.get('/genre/list', function(req, res, next) {
   });
 });
 
-router.get('/genre/:id', function(req, res, next) {
+router.get('/genre/one', function(req, res, next) {
+  res.render('quiz/genre_detail', {
+    user: req.user,
+    path: req.path,
+    pretty: true
+  });
+});
+
+router.get('/genre/one/:id', function(req, res, next) {
   db.serialize(function(){
     db.all("SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE q_genre_id="+req.params.id, function(err, rows){
       if (!err) {
-        res.render('quiz/genre_detail', {
-          user: req.user,
-          path: req.path,
-          list: rows,
-          pretty: true
-        }); 
+        res.json(rows);
       }
       else {
         console.log(err);

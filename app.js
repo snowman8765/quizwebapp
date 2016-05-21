@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require("passport");
 var flash = require('connect-flash');
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
 var quiz = require('./routes/quiz');
 var demo = require('./routes/demo');
@@ -36,9 +36,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/quiz', quiz);
+app.use('/v', index);
+app.use('/v/users', users);
+app.use('/v/quiz', quiz);
+
+app.get('/', function(req, res, next) {
+  res.render('layout/index', {
+    pretty: true
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,54 @@
+<ion-view view-title="{{project.title}}">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-thumbnail-left">
+        <img class="small-image" src="img/user/{{user.id}}.jpg">
+        <h2>{{user.name}}</h2>
+        <p>{{user.comment}}</p>
+      </div>
+
+      <div class="item item-body">
+        <div class="list list-inset">
+          <form>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">ID</span>
+              <input type="text" placeholder="quiz20160512" readonly>
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">登録日</span>
+              <input type="date" readonly> <input type="time" readonly>
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">公開する名前(必須)</span>
+              <input type="text" placeholder="hogehoge2016" required>
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">公開するコメント（任意）</span>
+              <input type="text" placeholder="よろしく">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">メールアドレス（任意）</span>
+              <input type="text" placeholder="hoge-foo-bar2016@gmail.com">
+            </label>
+            <label class="item item-input">
+              <span class="input-label">アバター画像</span>
+              <input type="file" placeholder="hoge-foo-bar2016.jpg">
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">
+                アバター画像
+              </div>
+              <select>
+                <option>Blue</option>
+                <option selected>Green</option>
+                <option>Red</option>
+              </select>
+            </label>
+            <input type="submit" value="更新">
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

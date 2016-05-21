@@ -1,16 +1,13 @@
-extends ../layout/index
-
-block content
-  .container
-    form.form-signin(action="/signup",method="post")
-      h2.form-signin-heading Please sign in
-      label.sr-only(for='inputEmail') username
-      input#inputEmail.form-control(type='text', placeholder='username', required='', autofocus='', name="username")
-      label.sr-only(for='inputPassword') Password
-      input#inputPassword.form-control(type='password', placeholder='Password', required='', name="password")
-      .checkbox
-        label
-          input(type='checkbox', value='remember-me')
-          |  Remember me
-      input.btn.btn-lg.btn-primary.btn-block(type='submit', value="Log In")
+.container
+  form.form-signin(action="/#/users/signup",method="post")
+    h2.form-signin-heading Please sign in
+    label.sr-only(for='inputEmail') username
+    input#inputEmail.form-control(type='text', placeholder='username', required='', autofocus='', name="username")
+    label.sr-only(for='inputPassword') Password
+    input#inputPassword.form-control(type='password', placeholder='Password', required='', name="password")
+    .checkbox
+      label
+        input(type='checkbox', value='remember-me')
+        |  Remember me
+    input.btn.btn-lg.btn-primary.btn-block(type='submit', value="Log In")
 

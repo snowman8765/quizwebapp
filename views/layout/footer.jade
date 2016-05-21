@@ -1,20 +1,20 @@
 if(user)
   ul.nav.nav-pills.dropup
     li#home(role='presentation')
-      a(href='/users/home') ホーム
+      a(ng-href='/#/users/home') ホーム
     li#config(role='presentation')
-      a(href='/users/config') 設定
+      a(ng-href='/#/users/config') 設定
     li#score(role='presentation')
-      a(href='/users/score') 成績
+      a(ng-href='/#/users/score') 成績
     li.dropdown(role='presentation')
       a.dropdown-toggle(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
         | 学習
         span.caret
       ul.dropdown-menu
         li
-          a(href='/quiz/book/list') 問題集別
+          a(ng-href='/#/quiz/book/list') 問題集別
         li
-          a(href='/quiz/genre/list') ジャンル別
+          a(ng-href='/#/quiz/genre/list') ジャンル別
         li
-          a(href='/quiz/tag/list') タグ別
+          a(ng-href='/#/quiz/tag/list') タグ別
 .well.well-sm 2016 &copy;aaa

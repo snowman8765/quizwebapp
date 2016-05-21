@@ -1,17 +1,30 @@
-var phonecatControllers = angular.module('phonecatControllers', []);
-
-phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-  function ($scope, $http) {
-    $http.get('phones/phones.json').success(function(data) {
-      $scope.phones = data;
-    });
-
-    $scope.orderProp = 'age';
+angular.module('quizApp.controllers', [])
+.controller('TopCtrl', ['$scope', '$routeParams', '$http',
+  function($scope, $routeParams, $http) {
   }
-]);
+])
 
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    $scope.phoneId = $routeParams.phoneId;
+.controller('QuizBookCtrl', ['$scope', '$routeParams', '$http',
+  function($scope, $routeParams, $http) {
+    var id = $routeParams.id;
+    if(id != undefined) {
+      console.log(id);
+      $http.get('/v/quiz/book/one/'+id).success(function(data) {
+        console.log(data);
+        $scope.list = data;
+      });
+    }
+  }
+])
+                        
+.controller('QuizGenreCtrl', ['$scope', '$routeParams', '$http',
+  function($scope, $routeParams, $http) {
+    var id = $routeParams.id;
+    if(id != undefined) {
+      $http.get('/v/quiz/genre/one/'+id).success(function(data) {
+        //console.log(data);
+        $scope.list = data;
+      });
+    }
   }
 ]);

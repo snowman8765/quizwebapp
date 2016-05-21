@@ -1,7 +1,4 @@
-extends ../layout/quiz
-
-block content
-  canvas#world
-    script.
-      var QUIZ_DATA = !{JSON.stringify(data)};
-  script(src="/js/quiz.test.js")
+canvas#world(ng-controller="QuizBookCtrl")
+  script.
+    var QUIZ_DATA = !{JSON.stringify(data)};
+script(src="/js/quiz.test.js")
