@@ -79,4 +79,13 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-]);
+])
+
+.controller('UserLoginCtrl', function($scope, $http) {
+    $scope.user = {};
+    $scope.submitForm = function() {
+        $http.post("/v/users/login").success(function(data) {
+            $scope.message = data.message;
+        });
+    };
+});

@@ -36,7 +36,7 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   
   .when('/users/login', {
     templateUrl: '/v/users/login',
-    controller: 'TopCtrl'
+    controller: 'UserLoginCtrl'
   })
   
   .when('/users/logout', {

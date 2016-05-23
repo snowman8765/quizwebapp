@@ -49,7 +49,7 @@ router.post('/signup', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  console.log("get /login:"+req.user);
+  console.log("users:get /login:"+req.user);
   res.render('users/login', {
     path: req.path,
     pretty: true
