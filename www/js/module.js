@@ -8,8 +8,7 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   })
   
   .when('/index', {
-    templateUrl: '/v/index',
-    controller: 'TopCtrl'
+    redirectTo: '/'
   })
   
   .when('/main', {
@@ -26,13 +25,8 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
     controller: 'TopCtrl'
   })
   
-  .when('/quiz', {
-    templateUrl: '/v/quiz',
-    controller: 'TopCtrl'
-  })
-  
   .when('/users', {
-    redirectTo: '/v/users/home'
+    redirectTo: '/users/home'
   })
   
   .when('/users/home', {
@@ -61,7 +55,7 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   })
   
   .when('/quiz/book', {
-    redirectTo: '/v/quiz/book/list'
+    redirectTo: '/quiz/book/list'
   })
   
   .when('/quiz/book/list', {
@@ -76,7 +70,26 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   
   .when('/quiz/book/start/:id', {
     templateUrl: '/v/quiz/book/start',
-    controller: 'QuizBookCtrl'
+    controller: 'QuizBookStartCtrl'
+  })
+  
+  .when('/quiz/single', {
+    redirectTo: '/quiz/single/list'
+  })
+  
+  .when('/quiz/single/list', {
+    templateUrl: '/v/quiz/single/list',
+    controller: 'QuizSingleCtrl'
+  })
+  
+  .when('/quiz/single/one/:id', {
+    templateUrl: '/v/quiz/single/one',
+    controller: 'QuizSingleCtrl'
+  })
+  
+  .when('/quiz/single/start/:id', {
+    templateUrl: '/v/quiz/single/start',
+    controller: 'QuizSingleStartCtrl'
   })
   
   .when('/quiz/genre', {

@@ -1,7 +1,12 @@
-ul.list-group(ng-controller="QuizGenreCtrl")
-  each item in list
-    a.list-group-item(ng-href='/#/quiz/genre/one/#{item.id}/')
-      h4
-        span.glyphicon.glyphicon-book(aria-hidden='true')
-        | &nbsp;#{item.title}
-      | #{item.comment}
+//- ジャンルの一覧
+//- 選択すると指定したジャンルの問題集が一覧表示される
+
+include ../show_header
+div
+  ul.list-group
+    each item in list
+      a.list-group-item(ng-href='/#/quiz/genre/one/#{item.id}/')
+        h4
+          span.glyphicon.glyphicon-book(aria-hidden='true')
+          | &nbsp;#{item.title}
+        | #{item.comment}

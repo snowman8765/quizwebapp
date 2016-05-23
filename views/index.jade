@@ -1,3 +1,7 @@
+//- 一番最初に表示する画面
+//- 全てのユーザが表示できる
+
+include show_header
 .panel.panel-danger
   .panel-heading
     span.glyphicon.glyphicon-exclamation-sign
@@ -16,12 +20,6 @@ ul.list-group
   a.list-group-item(ng-href='/#/users/signup')
     span.glyphicon.glyphicon-plus-sign(aria-hidden='true')
     | 新規登録
-.panel.panel-primary
-  .panel-heading
-    span.glyphicon.glyphicon-info-sign
-    | 新着情報
-  ul.list-group
-    a.list-group-item.list-group-item-success(ng-href='/#/info') success
-    a.list-group-item.list-group-item-info(ng-href='/#/info') info
-    a.list-group-item.list-group-item-warning(ng-href='/#/info') warning
-    a.list-group-item.list-group-item-danger.hidden(ng-href='/#/info') danger
+
+- var num = 5;
+include info

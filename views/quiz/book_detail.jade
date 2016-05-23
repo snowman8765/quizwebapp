@@ -1,7 +1,0 @@
-ul.list-group(ng-controller="QuizBookCtrl")
-  a.list-group-item(ng-repeat="data in list",ng-href='/#/quiz/book/start/{{data.id}}/')
-    h4
-      span.glyphicon.glyphicon-book(aria-hidden='true')
-      | &nbsp;{{data.title}}
-    | {{data.comment}}
-    span.badge 更新：{{data.updatetime}}

@@ -11,7 +11,7 @@ gulp.task('browsersync', function() {
     files: ['www/**/*.*', 'views/**/*.*'], // BrowserSyncにまかせるファイル群
     proxy: 'http://localhost',  // express の動作するポートにプロキシ
     port: 4000,  // BrowserSync は 4000 番ポートで起動
-    open: false  // ブラウザ open しない
+    open: false
   });
 });
 

@@ -11,7 +11,6 @@ var flash = require('connect-flash');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var quiz = require('./routes/quiz');
-var demo = require('./routes/demo');
 
 var app = express();
 
@@ -40,7 +39,7 @@ app.use('/v', index);
 app.use('/v/users', users);
 app.use('/v/quiz', quiz);
 
-app.get('/', function(req, res, next) {
+app.use('/', function(req, res, next) {
   res.render('layout/index', {
     pretty: true
   });

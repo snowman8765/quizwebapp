@@ -1,0 +1,11 @@
+//- 通常の画面と問題解答中の画面で表示の切り替えを行う
+//- 問題解答画面に切り替える
+
+script.
+  $(function() {
+    $("#main-header").removeClass("hidden");
+    $("#main-footer").removeClass("hidden");
+    $("#copy").removeClass("hidden");
+    //$("#quizmainarea").addClass("hidden");
+    $("canvas").remove();
+  });

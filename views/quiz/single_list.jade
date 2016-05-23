@@ -1,0 +1,15 @@
+//- 単一の問題の一覧
+//- 選択すると問題を始める
+
+include ../show_header
+div
+  ul.list-group
+    each item in list
+      a.list-group-item(ng-href='/#/quiz/single/one/#{item.id}/')
+        h4
+          span.glyphicon.glyphicon-book(aria-hidden='true')
+          | &nbsp;#{item.title}
+        | 問題形式:#{item.q_type_title}
+        br
+        | #{item.comment}
+        span.badge 更新：#{item.updatetime}

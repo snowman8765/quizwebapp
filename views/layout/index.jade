@@ -1,9 +1,11 @@
+//- ジャンル別に表示した問題集へのリンク
+
 doctype html
 //-html(lang="ja",manifest="/quizwebapp2.manifest")
 html(lang="ja", ng-app="quizApp")
   head
     include head
-  body(ng-controller="TopCtrl")
+  body
     include header
     div(ng-view)
     include footer

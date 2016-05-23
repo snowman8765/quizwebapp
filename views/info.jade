@@ -1,2 +1,35 @@
-p info
-  
+//- 更新情報などの表示する
+
+include show_header
+
+unless num
+  - var num = 100;
+
+-
+  var info = [
+  {
+    date: "2016年5月23日",
+    type: "info",
+    msg: "コメントテスト"
+  },
+  {
+    date: "2016年5月23日",
+    type: "info",
+    msg: "コメント追加"
+  },
+  {
+    date: "2016年5月23日",
+    type: "warning",
+    msg: "「AngularJSのコントローラが2回呼ばれる」を解決"
+  }
+  ];
+
+.panel.panel-primary
+  .panel-heading
+    span.glyphicon.glyphicon-info-sign
+    | 新着情報
+  ul.list-group
+    for val, index in info
+      if index < num
+        a.list-group-item(class="list-group-item-#{val.type}")
+          | #{val.date}:#{val.msg}

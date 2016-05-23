@@ -1,5 +1,8 @@
+//- 全ての画面に表示するフッター
+//- ログインしている場合は、ユーザ設定などのリンクを表示する
+
 if(user)
-  ul.nav.nav-pills.dropup
+  ul.nav.nav-pills.dropup#main-footer
     li#home(role='presentation')
       a(ng-href='/#/users/home') ホーム
     li#config(role='presentation')
@@ -17,4 +20,5 @@ if(user)
           a(ng-href='/#/quiz/genre/list') ジャンル別
         li
           a(ng-href='/#/quiz/tag/list') タグ別
-.well.well-sm 2016 &copy;aaa
+.well.well-sm#copy
+  | 2016 &copy;aaa
