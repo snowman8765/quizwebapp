@@ -39,8 +39,13 @@ app.use('/v', index);
 app.use('/v/users', users);
 app.use('/v/quiz', quiz);
 
+app.use("/",function(req, res, next){
+  //console.log(req.user);
+  next();
+});
 app.use('/', function(req, res, next) {
   res.render('layout/index', {
+    user: req.user,
     pretty: true
   });
 });

@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
       if (!err) {
         res.render('quiz/index', {
           user: req.user,
-          path: req.path,
           result: rows,
           pretty: true
         });
@@ -29,7 +28,6 @@ router.get('/book/list', function(req, res, next) {
       if (!err) {
         res.render('quiz/book_list', {
           user: req.user,
-          path: req.path,
           list: rows,
           pretty: true
         });
@@ -58,7 +56,6 @@ router.get('/book/one/:id', function(req, res, next) {
 router.get('/book/start', function(req, res, next) {
   res.render('quiz/book_start', {
     user: req.user,
-    path: req.path,
     pretty: true
   });
 });
@@ -83,7 +80,6 @@ router.get('/genre/list', function(req, res, next) {
       if (!err) {
         res.render('quiz/genre_list', {
           user: req.user,
-          path: req.path,
           list: rows,
           pretty: true
         });
@@ -98,7 +94,6 @@ router.get('/genre/list', function(req, res, next) {
 router.get('/genre/one', function(req, res, next) {
   res.render('quiz/genre_detail', {
     user: req.user,
-    path: req.path,
     pretty: true
   });
 });
@@ -124,7 +119,6 @@ router.get('/single/list', function(req, res, next) {
       if (!err) {
         res.render('quiz/single_list', {
           user: req.user,
-          path: req.path,
           list: rows,
           pretty: true
         });
@@ -153,7 +147,6 @@ router.get('/single/one/:id', function(req, res, next) {
 router.get('/single/start', function(req, res, next) {
   res.render('quiz/single_start', {
     user: req.user,
-    path: req.path,
     pretty: true
   });
 });

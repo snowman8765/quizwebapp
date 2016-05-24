@@ -1,11 +1,13 @@
-angular.module('quizApp.controllers', [])
-.controller('TopCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
-    console.log("TopCtrl:");
-  }
-])
+var ctrls = angular.module('quizApp.Controllers', []);
 
-.controller('QuizBookCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller('TopCtrl', ['$scope', '$routeParams', '$http', "FaviconService",
+  function($scope, $routeParams, $http, FaviconService) {
+    console.log("TopCtrl:");
+    FaviconService.badge(0);
+  }
+]);
+
+ctrls.controller('QuizBookCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     console.log("QuizBookCtrl:");
     var id = $routeParams.id;
@@ -18,9 +20,9 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-])
+]);
 
-.controller('QuizBookStartCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller('QuizBookStartCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     console.log("QuizBookStartCtrl:");
     var id = $routeParams.id;
@@ -33,9 +35,9 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-])
+]);
 
-.controller('QuizSingleCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller('QuizSingleCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     console.log("QuizSingleCtrl:");
     var id = $routeParams.id;
@@ -48,9 +50,9 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-])
+]);
 
-.controller('QuizSingleStartCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller('QuizSingleStartCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     console.log("QuizSingleStartCtrl:");
     var id = $routeParams.id;
@@ -63,9 +65,9 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-])
+]);
                         
-.controller('QuizGenreCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller('QuizGenreCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
     console.log("QuizGenreCtrl:");
     console.log($routeParams);
@@ -79,13 +81,26 @@ angular.module('quizApp.controllers', [])
       });
     }
   }
-])
+]);
 
-.controller('UserLoginCtrl', function($scope, $http) {
+ctrls.controller('UserLoginCtrl', ['$scope', '$routeParams', '$http', '$location',
+  function($scope, $routeParams, $http, $location) {
     $scope.user = {};
     $scope.submitForm = function() {
-        $http.post("/v/users/login").success(function(data) {
-            $scope.message = data.message;
-        });
+      $http({
+        method: 'POST',
+        url: "/v/users/login",
+        data: $.param({
+          userid: $scope.user.userid,
+          password: $scope.user.password
+        }),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }).success(function(data) {
+        $location.path("/users/home");
+      });
     };
-});
+  }
+]);
+
+ctrls.controller('UserCtrl', ['$scope', function($scope) {
+}]);

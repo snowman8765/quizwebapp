@@ -1,5 +1,4 @@
-angular.module('quizApp', ['ngRoute','quizApp.controllers'])
-.config(['$routeProvider', function($routeProvider){
+quizApp.config(['$routeProvider', function($routeProvider){
   $routeProvider
   
   .when('/', {
@@ -31,7 +30,7 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   
   .when('/users/home', {
     templateUrl: '/v/users/home',
-    controller: 'TopCtrl'
+    controller: 'UserCtrl'
   })
   
   .when('/users/login', {
@@ -41,7 +40,7 @@ angular.module('quizApp', ['ngRoute','quizApp.controllers'])
   
   .when('/users/logout', {
     templateUrl: '/v/users/logout',
-    controller: 'TopCtrl'
+    controller: 'UserCtrl'
   })
   
   .when('/users/config', {

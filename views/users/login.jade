@@ -1,7 +1,10 @@
-include ../show_header
+//- ログインするための入力画面
+//- 入力情報は非同期で送られるが、ログイン成功後はユーザホームに移動する
+
+include ../_show_header
 .container
   .hoge #{error}
-  form.form-signin(action="/#/users/login", method="post", name="userForm", ng-submit="submitForm()" novalidate)
+  form.form-signin(method="post", name="userForm", ng-submit="submitForm()" novalidate)
     h2.form-signin-heading Please sign in
     label.sr-only(for='inputEmail') ID
     input#inputEmail.form-control(type='text', placeholder='userid', required='', autofocus='', name="userid", value="#{input_id}", ng-model="user.userid")

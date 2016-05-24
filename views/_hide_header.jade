@@ -1,10 +1,15 @@
 //- 通常の画面と問題解答中の画面で表示の切り替えを行う
-//- 通常画面に切り替える
+//- 問題解答画面に切り替える
+
+include _userinfo
 
 script.
   $(function() {
     $("#main-header").addClass("hidden");
-    $("#main-footer").addClass("hidden");
+    if(user) {
+      $("#main-footer").addClass("hidden");
+      $("#logoutBtn").addClass("hidden");
+    }
     $("#copy").addClass("hidden");
     $("#quizmainarea").removeClass("hidden");
   });

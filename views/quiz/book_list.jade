@@ -1,7 +1,7 @@
 //- 問題集の一覧
 //- 選択すると問題を始める
 
-include ../show_header
+include ../_show_header
 div
   ul.list-group
     a.list-group-item(ng-repeat="data in list",ng-href='/#/quiz/book/start/{{data.id}}/')

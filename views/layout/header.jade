@@ -13,7 +13,7 @@ nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a(ng-href='/#/info')
+          a.text-left(ng-href='/#/info')
             span.glyphicon.glyphicon-info-sign(aria-hidden='true')
             | 情報
         li.dropdown(role='presentation')
@@ -23,17 +23,16 @@ nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
             span.caret
           ul.dropdown-menu
             li
-              a(ng-href='/#/quiz/book') 問題集別
+              a.text-left(ng-href='/#/quiz/book') 問題集別
             li
-              a(ng-href='/#/quiz/genre') ジャンル別
+              a.text-left(ng-href='/#/quiz/genre') ジャンル別
             li
-              a(ng-href='/#/quiz/tag') タグ別
+              a.text-left(ng-href='/#/quiz/tag') タグ別
         li
-          a(ng-href='/#/about')
+          a.text-left(ng-href='/#/about')
             span.glyphicon.glyphicon-question-sign(aria-hidden='true')
             | アプリについて
-        if(user)
-          li
-            a(ng-href='/#/users/logout')
-              span.glyphicon.glyphicon-log-out(aria-hidden='true')
-              | ログアウト
+        li
+          a.text-left.hidden#logoutBtn(ng-href='/#/users/logout')
+            span.glyphicon.glyphicon-log-out(aria-hidden='true')
+            | ログアウト

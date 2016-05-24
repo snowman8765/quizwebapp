@@ -1,2 +1,6 @@
 .vscode
 node_modules
+www/css/min
+www/js/min
+www/js/src/ng.main.js
+irasutoya

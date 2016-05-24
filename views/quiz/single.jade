@@ -1,8 +1,8 @@
 //- 単一の問題を表示する
 
-include ../hide_header
+include ../_hide_header
 div
   canvas.quizdisplay#quizmainarea
   script.
     var QUIZ_DATA = !{JSON.stringify(data)};
-  script(src="/js/quiz.single.js")
+  script(src="/js/min/quiz.single.js")
