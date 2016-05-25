@@ -5,6 +5,7 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('data/quiz.db');
+var moment = require('moment');
 
 var SQL_USER_COLUMN = "id, displayname, firstname, lastname, createtime, updatetime";
 var SQL_USER_COLUMN_WITH_PASSWORD = SQL_USER_COLUMN+", password";
@@ -13,63 +14,128 @@ function isAuthenticated(req, res, next){
   if (req.isAuthenticated()) {  // 認証済
     console.info("isAuthenticated: OK.");
     return next();
-  }
-  else {  // 認証されていない
+  } else {  // 認証されていない
     console.error("isAuthenticated: NG.");
-    res.redirect('/users/login');  // ログイン画面に遷移
+    res.send({isAuth:false});
+    //res.redirect('/users/login');  // ログイン画面に遷移
   }
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.redirect("/home");
 });
 
-router.get('/home', isAuthenticated, function(req, res, next) {
+router.get('/home', isAuthenticated, function(req, res) {
   res.render('users/home', {
     user: req.user,
     pretty: true
   });
 });
 
-router.get('/config', isAuthenticated, function(req, res, next) {
+router.get('/config', isAuthenticated, function(req, res) {
   res.render('users/config', {
     user: req.user,
     pretty: true
   });
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render('users/signup', {
-    user: null,
-    pretty: true
-  });
-});
-
-router.post('/signup', function(req, res, next) {
-  res.redirect("/home");
-});
-
-router.get('/login', function(req, res, next) {
-  console.log("users:get /login:"+req.user);
+router.route('/signup')
+.get(function(req, res) {
   res.render('users/login', {
     user: null,
+    result: {
+      input_id: "",
+      input_password: "",
+      message: ""
+    },
     pretty: true
   });
+})
+.post(function(req, res) {
+  console.log("post signup:");
+  console.log(req.body);
+  var userid = req.body.userid;
+  var password = req.body.password;
+  var currenttime = moment().format("YYYY-MM-DD HH:mm:ss").toString();
+  var salt = currenttime;
+  var result = {
+    input_id: userid,
+    input_password: password
+  };
+  console.log(currenttime);
+  
+  if(userid=="" || password=="") {
+    result.flag = false;
+    result.message = "入力にミスがあります。";
+  } else {
+    db.serialize(function(){
+      db.get('SELECT * FROM users WHERE id=?', userid, function(err, row) {
+        console.log("post signup:search userid.");
+        console.log(row);
+        if (row) {
+          console.log("find user.");
+          result.flag = false;
+          result.message = "指定のIDのユーザがすでに存在しています。";
+        } else {
+          var hash = hashPassword(password, salt);
+          console.log("post signup:insert user.");
+          db.run("INSERT INTO users (id, displayname, password, firstname, lastname, createtime, updatetime) VALUES (?,?,?,?,?,?,?)", userid, userid, hash, "", "", currenttime, currenttime);
+          result.flag = true;
+          result.message = "登録しました。";
+          console.log("signup ok.:id="+userid);
+        }
+      });
+    });
+  }
+  
+  //res.redirect("/users/home");
+  //console.log(result);
+  res.send(result);
 });
 
-router.post('/login', passport.authenticate('local'));
+router.route('/login')
+.get(function(req, res) {
+  //console.log("users:get /login:"+req.user);
+  res.render('users/login', {
+    user: null,
+    result: {
+      input_id: "",
+      input_password: "",
+      message: ""
+    },
+    pretty: true
+  });
+})
+.post(passport.authenticate('local'), function(req, res) {
+  console.log("after login.");
+  var result = {};
+  
+  if(req.user) {
+    result = {
+      input_id: req.user.id,
+      input_password: req.user.password,
+      message: "ログインしました。",
+      flag: true
+    };
+  } else {
+    result = {
+      input_id: "",
+      input_password: "",
+      message: "ログインに失敗しました。",
+      flag: false
+    };
+  }
+  res.send(result);
+});
 
-router.get("/logout", function(req, res){
+router.get("/logout", isAuthenticated, function(req, res){
   console.log("get /logout:"+req.id);
   //console.log(req);
   req.logout();
-  res.render('users/logout', {
-    user: null,
-    pretty: true
-  });
+  res.send("success logout.");
 });
 
-router.get('/:id', isAuthenticated, function(req, res, next) {
+router.get('/:id', isAuthenticated, function(req, res) {
   db.serialize(function(){
     db.get("SELECT "+SQL_USER_COLUMN+" FROM users WHERE id=?", req.params.id, function(err, rows){
       if (!err) {

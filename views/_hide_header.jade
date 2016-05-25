@@ -7,8 +7,7 @@ script.
   $(function() {
     $("#main-header").addClass("hidden");
     if(user) {
-      $("#main-footer").addClass("hidden");
-      $("#logoutBtn").addClass("hidden");
+      hideUserInfo();
     }
     $("#copy").addClass("hidden");
     $("#quizmainarea").removeClass("hidden");

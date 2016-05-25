@@ -2,13 +2,13 @@
 //- 入力情報は非同期で送られるが、ログイン成功後はユーザホームに移動する
 
 include ../_show_header
-.container
-  .hoge #{error}
-  form.form-signin(method="post", name="userForm", ng-submit="submitForm()" novalidate)
-    h2.form-signin-heading Please sign in
-    label.sr-only(for='inputEmail') ID
-    input#inputEmail.form-control(type='text', placeholder='userid', required='', autofocus='', name="userid", value="#{input_id}", ng-model="user.userid")
-    label.sr-only(for='inputPassword') パスワード
+
+form(method="post", name="userForm", ng-submit="submitForm()" novalidate)
+  h2.form-signin-heading {{inputTitle}}を入力してください
+  .form-group
+    label(for='userid') ユーザID
+    input#userid.form-control(type='text', placeholder='userid', required='', autofocus='', name="userid", value="#{input_id}", ng-model="user.userid")
+  .form-group
+    label(for='inputPassword') パスワード
     input#inputPassword.form-control(type='password', placeholder='******', required='', name="password", value="#{input_password}", ng-model="user.password")
-    br
-    input.btn.btn-lg.btn-primary.btn-block(type='submit', value="Login")
+  input.btn.btn-lg.btn-primary.btn-block(type='submit', value="{{submitBtn}}",ng-disabled="userForm.$invalid")

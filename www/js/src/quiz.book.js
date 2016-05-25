@@ -118,7 +118,7 @@ phina.define('MyTitleScene', {
     
     this.setInteractive(false)
     
-    console.log(QUIZ_DATA);
+    //console.log(QUIZ_DATA);
     var titleArea = TitleArea(QUIZ_DATA.title).addChildTo(this);
     titleArea.setPosition(
       this.gridX.center(),
@@ -221,6 +221,8 @@ phina.main(function() {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   });
+  
+  console.log(QUIZ_DATA);
   
   app.replaceScene(MyManagerScene());
   

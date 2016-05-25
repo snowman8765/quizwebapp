@@ -1,0 +1,19 @@
+#MainContents {
+  min-height: 400px;
+}
+
+.glyphicon {
+  padding-right: 8px;
+}
+
+.collapse-item:after {
+  display: block;
+  text-align: right;
+  color: black;
+  font-size: small;
+  content: "閉じる";
+}
+
+.collapse-item.collapsed:after {
+  content: "詳細を見る";
+}

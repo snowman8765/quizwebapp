@@ -21,5 +21,17 @@ ul.list-group
     span.glyphicon.glyphicon-plus-sign(aria-hidden='true')
     | 新規登録
 
+
+include _info_data
 - var num = 5;
-include info
+- var info_length = info.length;
+.panel.panel-primary
+  .panel-heading
+    span.glyphicon.glyphicon-info-sign
+    | 新着情報
+  ul.list-group
+    for val, index in info
+      if index < num
+        a.list-group-item(class="list-group-item-#{val.type}", ng-href="/#/info##{info_length--}")
+          span.badge.pull-left #{val.date}
+          h4.list-group-item-heading #{val.title}

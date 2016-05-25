@@ -4,10 +4,10 @@ doctype html
 //-html(lang="ja",manifest="/quizwebapp2.manifest")
 html(lang="ja", ng-app="quizApp")
   head
-    include layout/head
+    include layout/_head
   body
-    include layout/header
+    include layout/_header
     h1= message
     h2= error.status
     pre #{error.stack}
-    include layout/footer
+    include layout/_footer

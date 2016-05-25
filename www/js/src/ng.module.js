@@ -33,6 +33,11 @@ quizApp.config(['$routeProvider', function($routeProvider){
     controller: 'UserCtrl'
   })
   
+  .when('/users/signup', {
+    templateUrl: '/v/users/signup',
+    controller: 'UserSignupCtrl'
+  })
+  
   .when('/users/login', {
     templateUrl: '/v/users/login',
     controller: 'UserLoginCtrl'
@@ -40,7 +45,7 @@ quizApp.config(['$routeProvider', function($routeProvider){
   
   .when('/users/logout', {
     templateUrl: '/v/users/logout',
-    controller: 'UserCtrl'
+    controller: 'UserLogoutCtrl'
   })
   
   .when('/users/config', {

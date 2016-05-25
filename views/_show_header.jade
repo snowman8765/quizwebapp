@@ -7,8 +7,7 @@ script.
   $(function() {
     $("#main-header").removeClass("hidden");
     if(user) {
-      $("#main-footer").removeClass("hidden");
-      $("#logoutBtn").removeClass("hidden");
+      showUserInfo();
     }
     $("#copy").removeClass("hidden");
     $("canvas").remove();

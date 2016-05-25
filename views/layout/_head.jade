@@ -8,7 +8,7 @@ meta(name="format-detection",content="telephone=no")
 meta(name="description",content="")
 meta(name="keywords" content="")
 title オンラインクイズアプリケーション2
-link(rel="shortcut icon" href="/lib/irasutoya/anki_card/favicon-32x32.png")
+link(rel="shortcut icon" href="/favicon.ico")
 link(rel='stylesheet', href='/lib/honoka/css/bootstrap.min.css')
 link(rel='stylesheet', href='/css/min/style.css')
 script(src="/lib/jquery/jquery-2.2.3.min.js")
@@ -17,7 +17,7 @@ script(src="/lib/angular-1.5.5/angular-route.min.js")
 script(src="/lib/honoka/js/bootstrap.min.js")
 script(src="/lib/phina/phina.min.js")
 script(src="/lib/favico.js-0.3.10/favico-0.3.10.min.js")
-script(src="/js/min/ng.main.js")
+script(src="/js/src/ng.main.js")
 //- script(src="/js/module.js")
 //- script(src="/js/controller.js")
 script.
@@ -27,3 +27,11 @@ script.
       $(".navbar-collapse").collapse('hide');
     });
   });
+  function showUserInfo() {
+    $("#main-footer").removeClass("hidden");
+    $("#logoutBtn").removeClass("hidden");
+  }
+  function hideUserInfo() {
+    $("#main-footer").addClass("hidden");
+    $("#logoutBtn").addClass("hidden");
+  }

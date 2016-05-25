@@ -2,27 +2,9 @@
 
 include _show_header
 
-unless num
-  - var num = 100;
-
--
-  var info = [
-  {
-    date: "2016年5月23日",
-    type: "info",
-    msg: "コメントテスト"
-  },
-  {
-    date: "2016年5月23日",
-    type: "info",
-    msg: "コメント追加"
-  },
-  {
-    date: "2016年5月23日",
-    type: "warning",
-    msg: "「AngularJSのコントローラが2回呼ばれる」を解決"
-  }
-  ];
+include _info_data
+- var num = 100;
+- var info_length = info.length;
 
 .panel.panel-primary
   .panel-heading
@@ -31,5 +13,13 @@ unless num
   ul.list-group
     for val, index in info
       if index < num
-        a.list-group-item(class="list-group-item-#{val.type}")
-          | #{val.date}:#{val.msg}
+        a.list-group-item.collapse-item.collapsed(class="list-group-item-#{val.type}",name="#{info_length}",data-toggle="collapse",data-target="#item-#{info_length}")
+          span.badge.pull-left #{val.date}
+          h4.list-group-item-heading #{val.title}
+          div.collapse(id="item-#{info_length--}")
+            p.list-group-item-text #{val.msg}
+
+script.
+  $(function() {
+    $(location.hash.replace("#","#item-")).click();
+  });

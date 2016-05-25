@@ -4,8 +4,9 @@ doctype html
 //-html(lang="ja",manifest="/quizwebapp2.manifest")
 html(lang="ja", ng-app="quizApp")
   head
-    include head
+    include _head
   body
-    include header
-    div(ng-view)
-    include footer
+    include _header
+    .container#MainContents
+      div(ng-view)
+    include _footer

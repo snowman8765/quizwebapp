@@ -3,7 +3,7 @@ var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('data/quiz.db');
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   var query = "SELECT * FROM table_count";
   db.serialize(function(){
     db.all(query, function(err, rows){
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/book/list', function(req, res, next) {
+router.get('/book/list', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE id=?";
   db.serialize(function(){
     db.all(query, req.params.id, function(err, rows){
@@ -39,7 +39,7 @@ router.get('/book/list', function(req, res, next) {
   });
 });
 
-router.get('/book/one/:id', function(req, res, next) {
+router.get('/book/one/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE id=?";
   db.serialize(function(){
     db.get(query, req.params.id, function(err, rows){
@@ -53,14 +53,14 @@ router.get('/book/one/:id', function(req, res, next) {
   });
 });
 
-router.get('/book/start', function(req, res, next) {
+router.get('/book/start', function(req, res) {
   res.render('quiz/book_start', {
     user: req.user,
     pretty: true
   });
 });
 
-router.get('/book/start/:id', function(req, res, next) {
+router.get('/book/start/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, q_single_id, q_single_title, q_single_comment, answer, type, select1, select2, select3, select4, select5, select6, q_single_createtime, q_single_updatetime FROM book_quiz WHERE id=?";
   db.serialize(function(){
     db.all(query, req.params.id, function(err, rows){
@@ -73,7 +73,7 @@ router.get('/book/start/:id', function(req, res, next) {
   });
 });
 
-router.get('/genre/list', function(req, res, next) {
+router.get('/genre/list', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime FROM q_genre";
   db.serialize(function(){
     db.all(query, function(err, rows){
@@ -91,14 +91,14 @@ router.get('/genre/list', function(req, res, next) {
   });
 });
 
-router.get('/genre/one', function(req, res, next) {
+router.get('/genre/one', function(req, res) {
   res.render('quiz/genre_detail', {
     user: req.user,
     pretty: true
   });
 });
 
-router.get('/genre/one/:id', function(req, res, next) {
+router.get('/genre/one/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, q_genre_id, q_genre_title, q_genre_comment FROM book_genre WHERE q_genre_id=?";
   db.serialize(function(){
     db.all(query, req.params.id, function(err, rows){
@@ -112,7 +112,7 @@ router.get('/genre/one/:id', function(req, res, next) {
   });
 });
 
-router.get('/single/list', function(req, res, next) {
+router.get('/single/list', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, q_type_title FROM single_quiz";
   db.serialize(function(){
     db.all(query, function(err, rows){
@@ -130,7 +130,7 @@ router.get('/single/list', function(req, res, next) {
   });
 });
 
-router.get('/single/one/:id', function(req, res, next) {
+router.get('/single/one/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id=?";
   db.serialize(function(){
     db.all(query, req.params.id, function(err, rows){
@@ -144,14 +144,14 @@ router.get('/single/one/:id', function(req, res, next) {
   });
 });
 
-router.get('/single/start', function(req, res, next) {
+router.get('/single/start', function(req, res) {
   res.render('quiz/single_start', {
     user: req.user,
     pretty: true
   });
 });
 
-router.get('/single/start/:id', function(req, res, next) {
+router.get('/single/start/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id=?";
   db.serialize(function(){
     db.all(query, req.params.id, function(err, rows){
@@ -165,7 +165,7 @@ router.get('/single/start/:id', function(req, res, next) {
   });
 });
 
-router.get('/single/answer/:id', function(req, res, next) {
+router.get('/single/answer/:id', function(req, res) {
   var query = "SELECT id, title, comment, createtime, updatetime, answer, type, select1, select2, select3, select4, select5, select6 FROM q_single WHERE id=?";
   db.serialize(function(){
     db.get(query, req.params.id, function(err, rows){
