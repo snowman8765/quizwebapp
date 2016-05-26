@@ -43,6 +43,7 @@ ctrls.controller('UserLoginCtrl', ['$scope', '$routeParams', '$http', '$location
         $scope.result = data;
         if(data.flag) {
           $location.path("/users/home");
+          socket.emit("login", data.displayname);
         }
       });
     };

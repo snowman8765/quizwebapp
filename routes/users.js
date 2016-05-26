@@ -115,7 +115,8 @@ router.route('/login')
       input_id: req.user.id,
       input_password: req.user.password,
       message: "ログインしました。",
-      flag: true
+      flag: true,
+      displayname: req.user.displayname
     };
   } else {
     result = {

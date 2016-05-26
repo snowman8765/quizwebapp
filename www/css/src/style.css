@@ -17,3 +17,12 @@
 .collapse-item.collapsed:after {
   content: "詳細を見る";
 }
+
+.message-area {
+  position:fixed;
+  top:0;
+  left:0;
+  display:block;
+  width:100%;
+  z-index:1000;
+}

@@ -27,7 +27,7 @@ gulp.task('browsersync', function() {
 
 gulp.task('serve', ['browsersync'], function () {
   nodemon({ 
-    script: './bin/www',
+    script: 'app.js',
     ext: 'js html css',
     ignore: [  // nodemon で監視しないディレクトリ
       'node_modules',
@@ -57,7 +57,7 @@ gulp.task('serve', ['browsersync'], function () {
 
 // AngularJS用のjavascriptファイルをまとめる
 gulp.task('js.concat.angular', function() {
-  return gulp.src(['www/js/src/ng.*.js', '!www/js/src/ng.main.js'])
+  return gulp.src(['www/js/src/ng.*.js', 'www/js/src/ng.*.*.js', '!www/js/src/ng.main.js'])
     .pipe(plumber())
     .pipe(concat('ng.main.js'))
     .pipe(gulp.dest('www/js/src/'));
@@ -86,4 +86,4 @@ gulp.task('watch', function() {
   gulp.watch(['www/js/src/*.js', 'www/css/src/*.css'], ['min']);
 });
 
-gulp.task('clean', del.bind(null, ['www/js/src/ng.main.js', 'www/js/min', 'www/css/min']));
+gulp.task('clean', del.bind(null, ['www/js/src/ng.main.js', 'www/js/min/*', 'www/css/min/*']));

@@ -125,6 +125,6 @@ quizApp.config(['$routeProvider', function($routeProvider){
   })
   
   .otherwise({
-    redirectTo: '/info'
+    redirectTo: '/'
   });
 }]);

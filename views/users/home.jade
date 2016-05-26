@@ -12,3 +12,23 @@ include ../_show_header
     p 名前：#{user.lastname}
     p 登録日：#{user.createtime}
     p 更新日：#{user.updatetime}
+
+ui#messages
+form(action='')
+  input#m(autocomplete='off')
+  button 発言
+
+script.
+  $(function() {
+    var socket = io();
+    $('form').submit(function(){
+      var msg = $('#m').val();
+      socket.emit('chat home message', {msg:msg,name:user.displayname});
+      $('#m').val('');
+      return false;
+    });
+    socket.on('chat home message', function(msg){
+      var html = $('<li>').text(msg.msg+"@"+msg.name+"("+msg.time+")");
+      $('#messages').append(html);
+    });
+  });

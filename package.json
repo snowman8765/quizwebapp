@@ -1,10 +1,10 @@
 {
-  "name": "quizApp",
-  "version": "0.0.5",
+  "name": "quizwebapp2",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
-    "postinstall" : "gulp min",
-    "start": "node ./bin/www"
+    "postinstall": "gulp min",
+    "start": "node app.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -20,6 +20,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
+    "socket.io": "^1.4.6",
     "sqlite3": "^3.1.4"
   },
   "devDependencies": {
