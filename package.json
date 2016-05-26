@@ -3,6 +3,7 @@
   "version": "0.0.5",
   "private": true,
   "scripts": {
+    "postinstall" : "gulp min",
     "start": "node ./bin/www"
   },
   "dependencies": {
