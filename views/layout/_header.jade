@@ -4,37 +4,37 @@
 nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
   .container
     .navbar-header
-      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+      button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(ng-href='/#/index') オンラインクイズアプリケーション2
+      a.navbar-brand(ng-href="/#/index") オンラインクイズアプリケーション2
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a.text-left(ng-href='/#/info')
-            span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+          a.text-left(ng-href="/#/info")
+            span.glyphicon.glyphicon-info-sign(aria-hidden="true")
             | 情報
-        li.dropdown(role='presentation')
-          a.dropdown-toggle(data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            span.glyphicon.glyphicon-education(aria-hidden='true')
+        li.dropdown(role="presentation")
+          a.dropdown-toggle(data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false")
+            span.glyphicon.glyphicon-education(aria-hidden="true")
             | 学習
             span.caret
           ul.dropdown-menu
             li
-              a.text-left(ng-href='/#/quiz/book') 問題集別
+              a.text-left(ng-href="/#/quiz/book") 問題集別
             li
-              a.text-left(ng-href='/#/quiz/genre') ジャンル別
+              a.text-left(ng-href="/#/quiz/genre") ジャンル別
             li
-              a.text-left(ng-href='/#/quiz/tag') タグ別
+              a.text-left(ng-href="/#/quiz/tag") タグ別
         li
-          a.text-left(ng-href='/#/about')
-            span.glyphicon.glyphicon-question-sign(aria-hidden='true')
+          a.text-left(ng-href="/#/about")
+            span.glyphicon.glyphicon-question-sign(aria-hidden="true")
             | アプリについて
         li
-          a.text-left.hidden#logoutBtn(ng-href='/#/users/logout')
-            span.glyphicon.glyphicon-log-out(aria-hidden='true')
+          a.text-left.hidden#logoutBtn(ng-href="/#/users/logout")
+            span.glyphicon.glyphicon-log-out(aria-hidden="true")
             | ログアウト
 
 .alert.alert-info.message-area#broadcast(role="alert")

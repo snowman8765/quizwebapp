@@ -6,9 +6,9 @@ include ../_show_header
 form(method="post", name="userForm", ng-submit="submitForm()" novalidate)
   h2.form-signin-heading {{inputTitle}}を入力してください
   .form-group
-    label(for='userid') ユーザID
-    input#userid.form-control(type='text', placeholder='userid', required='', autofocus='', name="userid", value="#{input_id}", ng-model="user.userid")
+    label(for="userid") ユーザID
+    input#userid.form-control(type="text", placeholder="userid", required="", autofocus="", name="userid", value="#{input_id}", ng-model="user.userid")
   .form-group
-    label(for='inputPassword') パスワード
-    input#inputPassword.form-control(type='password', placeholder='******', required='', name="password", value="#{input_password}", ng-model="user.password")
-  input.btn.btn-lg.btn-primary.btn-block(type='submit', value="{{submitBtn}}",ng-disabled="userForm.$invalid")
+    label(for="inputPassword") パスワード
+    input#inputPassword.form-control(type="password", placeholder="******", required="", name="password", value="#{input_password}", ng-model="user.password")
+  input.btn.btn-lg.btn-primary.btn-block(type="submit", value="{{submitBtn}}",ng-disabled="userForm.$invalid")

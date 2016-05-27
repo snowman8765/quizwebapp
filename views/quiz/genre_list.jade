@@ -5,8 +5,8 @@ include ../_show_header
 div
   ul.list-group
     each item in list
-      a.list-group-item(ng-href='/#/quiz/genre/one/#{item.id}/')
+      a.list-group-item(ng-href="/#/quiz/genre/one/#{item.id}/")
         h4
-          span.glyphicon.glyphicon-book(aria-hidden='true')
+          span.glyphicon.glyphicon-book(aria-hidden="true")
           | &nbsp;#{item.title}
         | #{item.comment}

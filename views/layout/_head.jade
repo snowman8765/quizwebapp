@@ -1,7 +1,7 @@
 //- メタ情報など
 
 meta(charset="utf-8")
-meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
 meta(name="viewport",content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no")
 meta(name="apple-mobile-web-app-capable",content="no")
 meta(name="format-detection",content="telephone=no")
@@ -9,8 +9,8 @@ meta(name="description",content="")
 meta(name="keywords" content="")
 title オンラインクイズアプリケーション2
 link(rel="shortcut icon" href="/favicon.ico")
-link(rel='stylesheet', href='/lib/honoka/css/bootstrap.min.css')
-link(rel='stylesheet', href='/css/min/style.css')
+link(rel="stylesheet", href="/lib/honoka/css/bootstrap.min.css")
+link(rel="stylesheet", href="/css/min/style.css")
 script(src="/lib/jquery/jquery-2.2.3.min.js")
 script(src="/lib/angular-1.5.5/angular.min.js")
 script(src="/lib/angular-1.5.5/angular-route.min.js")
@@ -25,7 +25,7 @@ script.
   var user = null;
   $(function() {
     $(".navbar-nav li a.text-left").click(function(event) {
-      $(".navbar-collapse").collapse('hide');
+      $(".navbar-collapse").collapse("hide");
     });
   });
   function showUserInfo() {
@@ -38,16 +38,16 @@ script.
   }
 script.
   var socket = io();
-  socket.on('message', function(msg){
-    $('#messages').append($('<li>').text(msg));
+  socket.on("message", function(msg){
+    $("#messages").append($("<li>").text(msg));
   });
   
   $(function() {
-    $('#broadcast').hide();
-    socket.on('message', function(msg){
+    $("#broadcast").hide();
+    socket.on("message", function(msg){
       console.log(msg);
-      $('#broadcast').html(msg);
-      $('#broadcast').slideDown(1000).fadeOut(3000);
+      $("#broadcast").html(msg);
+      $("#broadcast").slideDown(1000).fadeOut(3000);
     });
   });
   

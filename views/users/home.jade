@@ -4,7 +4,7 @@
 include ../_show_header
 
 .thumbnail
-  img(src='/img/logo.png')
+  img(src="/img/logo.png")
   .caption
     p ID：#{user.id}
     p 表示名：#{user.displayname}
@@ -14,21 +14,21 @@ include ../_show_header
     p 更新日：#{user.updatetime}
 
 ui#messages
-form(action='')
-  input#m(autocomplete='off')
+form(action="")
+  input#m(autocomplete="off")
   button 発言
 
 script.
   $(function() {
     var socket = io();
-    $('form').submit(function(){
-      var msg = $('#m').val();
-      socket.emit('chat home message', {msg:msg,name:user.displayname});
-      $('#m').val('');
+    $("form").submit(function(){
+      var msg = $("#m").val();
+      socket.emit("chat home message", {msg:msg,name:user.displayname});
+      $("#m").val("");
       return false;
     });
-    socket.on('chat home message', function(msg){
-      var html = $('<li>').text(msg.msg+"@"+msg.name+"("+msg.time+")");
-      $('#messages').append(html);
+    socket.on("chat home message", function(msg){
+      var html = $("<li>").text(msg.msg+"@"+msg.name+"("+msg.time+")");
+      $("#messages").append(html);
     });
   });

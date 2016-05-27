@@ -1,7 +1,7 @@
-ctrls.controller('UserCtrl', ['$scope', function($scope) {
+ctrls.controller("UserCtrl", ["$scope", function($scope) {
 }]);
 
-ctrls.controller('UserSignupCtrl', ['$scope', '$routeParams', '$http', '$location',
+ctrls.controller("UserSignupCtrl", ["$scope", "$routeParams", "$http", "$location",
   function($scope, $routeParams, $http, $location) {
     $scope.user = {};
     $scope.inputTitle = "登録情報";
@@ -9,13 +9,13 @@ ctrls.controller('UserSignupCtrl', ['$scope', '$routeParams', '$http', '$locatio
     $scope.submitForm = function() {
       console.log($scope.user);
       $http({
-        method: 'POST',
+        method: "POST",
         url: "/v/users/signup",
         data: $.param({
           userid: $scope.user.userid,
           password: $scope.user.password
         }),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        headers: {"Content-Type": "application/x-www-form-urlencoded"}
         
       }).success(function(data) {
         $scope.result = data;
@@ -24,20 +24,20 @@ ctrls.controller('UserSignupCtrl', ['$scope', '$routeParams', '$http', '$locatio
   }
 ]);
 
-ctrls.controller('UserLoginCtrl', ['$scope', '$routeParams', '$http', '$location',
+ctrls.controller("UserLoginCtrl", ["$scope", "$routeParams", "$http", "$location",
   function($scope, $routeParams, $http, $location) {
     $scope.user = {};
     $scope.inputTitle = "ログイン情報";
     $scope.submitBtn = "ログイン";
     $scope.submitForm = function() {
       $http({
-        method: 'POST',
+        method: "POST",
         url: "/v/users/login",
         data: $.param({
           userid: $scope.user.userid,
           password: $scope.user.password
         }),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        headers: {"Content-Type": "application/x-www-form-urlencoded"}
         
       }).success(function(data) {
         $scope.result = data;
@@ -50,7 +50,7 @@ ctrls.controller('UserLoginCtrl', ['$scope', '$routeParams', '$http', '$location
   }
 ]);
 
-ctrls.controller('UserLogoutCtrl', ['$scope', '$location', function($scope, $location) {
+ctrls.controller("UserLogoutCtrl", ["$scope", "$location", function($scope, $location) {
   $location.path("/");
   hideUserInfo();
 }]);

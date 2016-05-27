@@ -5,7 +5,7 @@ phina.globalize();
 var ASSETS = {
   image: {},
   font: {
-    'honoka': 'https://fonts.googleapis.com/css?family=Lobster'
+    "honoka": "https://fonts.googleapis.com/css?family=Lobster"
   },
   sound: {},
   script: {}
@@ -17,8 +17,8 @@ var TITLE_WIDTH = SCREEN_WIDTH - 10;
 var TITLE_HEIGHT = SCREEN_HEIGHT / 16;
 var SPACE_HEIGHT = TITLE_HEIGHT / 2;
 
-phina.define('TitleArea', {  
-  superClass: 'RectangleShape',
+phina.define("TitleArea", {  
+  superClass: "RectangleShape",
 
   init: function(title) {
     this.superInit({
@@ -38,8 +38,8 @@ phina.define('TitleArea', {
   }
 });
 
-phina.define('QuizArea', {  
-  superClass: 'RectangleShape',
+phina.define("QuizArea", {  
+  superClass: "RectangleShape",
 
   init: function(title) {
     this.superInit({
@@ -59,8 +59,8 @@ phina.define('QuizArea', {
   }
 });
 
-phina.define('AnswerArea', {  
-  superClass: 'RectangleShape',
+phina.define("AnswerArea", {  
+  superClass: "RectangleShape",
 
   init: function(answer, scene) {
     this.superInit({
@@ -91,7 +91,7 @@ phina.define('AnswerArea', {
       selButton.setPosition(this.gridX.span(ans%2), this.gridY.span(parseInt(ans/2)));
       selButton.id = parseInt(ans)+1;
       selButton.setInteractive(true);
-      selButton.on('pointend', function() {
+      selButton.on("pointend", function() {
         console.log("clicked:"+this.id);
         scene.exit({your_answer:this.id});
       }, selButton);
@@ -110,8 +110,8 @@ phina.define('AnswerArea', {
 //============================================
 // タイトルシーン
 //============================================
-phina.define('MyTitleScene', {
-  superClass: 'DisplayScene',
+phina.define("MyTitleScene", {
+  superClass: "DisplayScene",
   
   init: function() {
     this.superInit();
@@ -153,8 +153,8 @@ phina.define('MyTitleScene', {
 //============================================
 // リザルトシーン
 //============================================
-phina.define('MyResultScene', {
-  superClass: 'DisplayScene',
+phina.define("MyResultScene", {
+  superClass: "DisplayScene",
   
   jsonData:null,
   
@@ -192,20 +192,20 @@ phina.define('MyResultScene', {
 //============================================
 // マネージャーシーン
 //============================================
-phina.define('MyManagerScene' , {
-  superClass: 'ManagerScene' ,
+phina.define("MyManagerScene" , {
+  superClass: "ManagerScene" ,
   init: function() {
     this.superInit({
       scenes: [
         {
-          className: 'MyTitleScene',
-          label: 'title',
-          nextLabel: 'result',
+          className: "MyTitleScene",
+          label: "title",
+          nextLabel: "result",
         },
         {
-          className: 'MyResultScene',
-          label: 'result',
-          nextLabel: 'title',
+          className: "MyResultScene",
+          label: "result",
+          nextLabel: "title",
           arguments: {}
         },
       ]
@@ -215,7 +215,7 @@ phina.define('MyManagerScene' , {
 
 phina.main(function() {
   var app = GameApp({
-    startLabel: 'title',
+    startLabel: "title",
     assets: ASSETS,       // アセット読み込み
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT

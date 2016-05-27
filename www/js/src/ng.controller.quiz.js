@@ -1,11 +1,11 @@
-ctrls.controller('QuizBookCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller("QuizBookCtrl", ["$scope", "$routeParams", "$http",
   function($scope, $routeParams, $http) {
     console.log("QuizBookCtrl:");
     var id = $routeParams.id;
     $scope.id = $routeParams.id;
     if(id != undefined) {
       console.log(id);
-      $http.get('/v/quiz/book/one/'+id).success(function(data) {
+      $http.get("/v/quiz/book/one/"+id).success(function(data) {
         console.log(data);
         $scope.list = data;
       });
@@ -13,14 +13,14 @@ ctrls.controller('QuizBookCtrl', ['$scope', '$routeParams', '$http',
   }
 ]);
 
-ctrls.controller('QuizBookStartCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller("QuizBookStartCtrl", ["$scope", "$routeParams", "$http",
   function($scope, $routeParams, $http) {
     console.log("QuizBookStartCtrl:");
     var id = $routeParams.id;
     $scope.id = $routeParams.id;
     if(id != undefined) {
       $("#loadingPanel").removeClass("hidden");
-      $http.get('/v/quiz/book/start/'+id).success(function(data) {
+      $http.get("/v/quiz/book/start/"+id).success(function(data) {
         //$scope.list = data;
         QUIZ_LIST = data;
         QUIZ_DATA = data[0];
@@ -31,14 +31,14 @@ ctrls.controller('QuizBookStartCtrl', ['$scope', '$routeParams', '$http',
   }
 ]);
 
-ctrls.controller('QuizSingleCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller("QuizSingleCtrl", ["$scope", "$routeParams", "$http",
   function($scope, $routeParams, $http) {
     console.log("QuizSingleCtrl:");
     var id = $routeParams.id;
     $scope.id = $routeParams.id;
     if(id != undefined) {
       console.log(id);
-      $http.get('/v/quiz/single/one/'+id).success(function(data) {
+      $http.get("/v/quiz/single/one/"+id).success(function(data) {
         $scope.list = data;
         QUIZ_DATA = data;
       });
@@ -46,13 +46,13 @@ ctrls.controller('QuizSingleCtrl', ['$scope', '$routeParams', '$http',
   }
 ]);
 
-ctrls.controller('QuizSingleStartCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller("QuizSingleStartCtrl", ["$scope", "$routeParams", "$http",
   function($scope, $routeParams, $http) {
     console.log("QuizSingleStartCtrl:");
     var id = $routeParams.id;
     $scope.id = $routeParams.id;
     if(id != undefined) {
-      $http.get('/v/quiz/single/start/'+id).success(function(data) {
+      $http.get("/v/quiz/single/start/"+id).success(function(data) {
         $scope.list = data;
         QUIZ_LIST = data;
         $.getScript("/js/quiz.book.js");
@@ -61,7 +61,7 @@ ctrls.controller('QuizSingleStartCtrl', ['$scope', '$routeParams', '$http',
   }
 ]);
 
-ctrls.controller('QuizGenreCtrl', ['$scope', '$routeParams', '$http',
+ctrls.controller("QuizGenreCtrl", ["$scope", "$routeParams", "$http",
   function($scope, $routeParams, $http) {
     console.log("QuizGenreCtrl:");
     console.log($routeParams);
@@ -69,7 +69,7 @@ ctrls.controller('QuizGenreCtrl', ['$scope', '$routeParams', '$http',
     $scope.id = $routeParams.id;
     if(id != undefined) {
       console.log(id);
-      $http.get('/v/quiz/genre/one/'+id).success(function(data) {
+      $http.get("/v/quiz/genre/one/"+id).success(function(data) {
         //console.log(data);
         $scope.list = data;
       });

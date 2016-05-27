@@ -1,11 +1,11 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var crypto = require('crypto');
+var crypto = require("crypto");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('data/quiz.db');
-var moment = require('moment');
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database("data/quiz.db");
+var moment = require("moment");
 
 var SQL_USER_COLUMN = "id, displayname, firstname, lastname, createtime, updatetime";
 var SQL_USER_COLUMN_WITH_PASSWORD = SQL_USER_COLUMN+", password";
@@ -17,39 +17,30 @@ function isAuthenticated(req, res, next){
   } else {  // 認証されていない
     console.error("isAuthenticated: NG.");
     res.send({isAuth:false});
-    //res.redirect('/users/login');  // ログイン画面に遷移
+    //res.redirect("/users/login");  // ログイン画面に遷移
   }
 }
 
-router.get('/', function(req, res) {
+router.get("/", function(req, res) {
   res.redirect("/home");
 });
 
-router.get('/home', isAuthenticated, function(req, res) {
-  res.render('users/home', {
-    user: req.user,
-    pretty: true
-  });
+router.get("/home", isAuthenticated, function(req, res) {
+  res.render("users/home");
 });
 
-router.get('/config', isAuthenticated, function(req, res) {
-  res.render('users/config', {
-    user: req.user,
-    pretty: true
-  });
+router.get("/config", isAuthenticated, function(req, res) {
+  res.render("users/config");
 });
 
-router.route('/signup')
+router.route("/signup")
 .get(function(req, res) {
-  res.render('users/login', {
-    user: null,
-    result: {
-      input_id: "",
-      input_password: "",
-      message: ""
-    },
-    pretty: true
-  });
+  res.locals.result = {
+    input_id: "",
+    input_password: "",
+    message: ""
+  };
+  res.render("users/login");
 })
 .post(function(req, res) {
   console.log("post signup:");
@@ -69,7 +60,7 @@ router.route('/signup')
     result.message = "入力にミスがあります。";
   } else {
     db.serialize(function(){
-      db.get('SELECT * FROM users WHERE id=?', userid, function(err, row) {
+      db.get("SELECT * FROM users WHERE id=?", userid, function(err, row) {
         console.log("post signup:search userid.");
         console.log(row);
         if (row) {
@@ -93,20 +84,17 @@ router.route('/signup')
   res.send(result);
 });
 
-router.route('/login')
+router.route("/login")
 .get(function(req, res) {
   //console.log("users:get /login:"+req.user);
-  res.render('users/login', {
-    user: null,
-    result: {
-      input_id: "",
-      input_password: "",
-      message: ""
-    },
-    pretty: true
-  });
+  res.locals.result = {
+    input_id: "",
+    input_password: "",
+    message: ""
+  };
+  res.render("users/login");
 })
-.post(passport.authenticate('local'), function(req, res) {
+.post(passport.authenticate("local"), function(req, res) {
   console.log("after login.");
   var result = {};
   
@@ -136,15 +124,12 @@ router.get("/logout", isAuthenticated, function(req, res){
   res.send("success logout.");
 });
 
-router.get('/:id', isAuthenticated, function(req, res) {
+router.get("/:id", isAuthenticated, function(req, res) {
   db.serialize(function(){
     db.get("SELECT "+SQL_USER_COLUMN+" FROM users WHERE id=?", req.params.id, function(err, rows){
       if (!err) {
-        res.locals.userdata = rows;
-        res.render('users/single', {
-          data: rows,
-          pretty: true
-        });
+        res.locals.data = rows;
+        res.render("users/single");
       }
       else {
         console.log(err);
@@ -154,15 +139,15 @@ router.get('/:id', isAuthenticated, function(req, res) {
 });
 
 function hashPassword(password, salt) {
-  var hash = crypto.createHash('sha256');
+  var hash = crypto.createHash("sha256");
   hash.update(password);
   hash.update(salt);
-  return hash.digest('hex');
+  return hash.digest("hex");
 }
 
 passport.use(new LocalStrategy({usernameField: "userid", passwordField: "password"}, function(userid, password, done) {
   console.log("check login.");
-  db.get('SELECT createtime as salt FROM users WHERE id=?', userid, function(err, row) {
+  db.get("SELECT createtime as salt FROM users WHERE id=?", userid, function(err, row) {
     if (!row) {
       return done(null, false, {
         message: "ユーザーが見つかりませんでした。"

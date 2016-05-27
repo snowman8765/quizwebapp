@@ -2,22 +2,22 @@
 //- ログインしている場合は、ユーザ設定などのリンクを表示する
 
 ul.nav.nav-pills.dropup.hidden#main-footer
-  li#home(role='presentation')
-    a(ng-href='/#/users/home') ホーム
-  li#config(role='presentation')
-    a(ng-href='/#/users/config') 設定
-  li#score(role='presentation')
-    a(ng-href='/#/users/score') 成績
-  li.dropdown(role='presentation')
-    a.dropdown-toggle(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
+  li#home(role="presentation")
+    a(ng-href="/#/users/home") ホーム
+  li#config(role="presentation")
+    a(ng-href="/#/users/config") 設定
+  li#score(role="presentation")
+    a(ng-href="/#/users/score") 成績
+  li.dropdown(role="presentation")
+    a.dropdown-toggle(data-toggle="dropdown", href="#", role="button", aria-haspopup="true", aria-expanded="false")
       | 学習
       span.caret
     ul.dropdown-menu
       li
-        a(ng-href='/#/quiz/book/list') 問題集別
+        a(ng-href="/#/quiz/book/list") 問題集別
       li
-        a(ng-href='/#/quiz/genre/list') ジャンル別
+        a(ng-href="/#/quiz/genre/list") ジャンル別
       li
-        a(ng-href='/#/quiz/tag/list') タグ別
+        a(ng-href="/#/quiz/tag/list") タグ別
 .well.well-sm#copy
   | 2016 &copy;aaa

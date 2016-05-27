@@ -1,6 +1,9 @@
 {
   "name": "quizwebapp2",
   "version": "0.0.6",
+  "description": "クイズで学習するためのアプリケーション",
+  "main": "app.js",
+  "author": "snowman8765",
   "private": true,
   "scripts": {
     "postinstall": "gulp min",
@@ -26,6 +29,7 @@
   "devDependencies": {
     "browser-sync": "^2.12.8",
     "del": "^2.2.0",
+    "electron-packager": "^7.0.2",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
@@ -34,5 +38,15 @@
     "gulp-uglify": "^1.5.3",
     "rimraf": "^2.5.2",
     "run-sequence": "^1.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snowman8765/quizwebapp.git"
+  },
+  "keywords": [
+    "quiz",
+    "クイズ",
+    "勉強",
+    "学習"
+  ]
 }

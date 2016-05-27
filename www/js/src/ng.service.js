@@ -1,4 +1,4 @@
-var srvcs = angular.module('quizApp.Services', []);
+var srvcs = angular.module("quizApp.Services", []);
 
 srvcs.factory("FaviconService", function(){
   var favicon = new Favico({
