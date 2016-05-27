@@ -10,6 +10,11 @@ quizApp.config(["$routeProvider", function($routeProvider){
     redirectTo: "/"
   })
   
+  .when("/reload", {
+    redirectTo: "/",
+    controller: "ReloadCtrl"
+  })
+  
   .when("/main", {
     templateUrl: "/v/main",
     controller: "TopCtrl"

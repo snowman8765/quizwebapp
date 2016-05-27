@@ -19,8 +19,6 @@ script(src="/lib/phina/phina.min.js")
 script(src="/lib/favico.js-0.3.10/favico-0.3.10.min.js")
 script(src="/lib/socket.io/socket.io.js")
 script(src="/js/min/ng.main.js")
-//- script(src="/js/module.js")
-//- script(src="/js/controller.js")
 script.
   var user = null;
   $(function() {
@@ -38,16 +36,14 @@ script.
   }
 script.
   var socket = io();
-  socket.on("message", function(msg){
-    $("#messages").append($("<li>").text(msg));
-  });
-  
   $(function() {
-    $("#broadcast").hide();
-    socket.on("message", function(msg){
+    socket.on("broadcast", function(msg){
       console.log(msg);
-      $("#broadcast").html(msg);
-      $("#broadcast").slideDown(1000).fadeOut(3000);
+      $("body").append("<div id='broadcast' role='alert'></div>");
+      $("#broadcast").addClass("alert").addClass("alert-info").addClass("message-area");
+      $("#broadcast").html(msg).slideDown(1000).fadeOut(3000)
+      .queue(function() {
+        this.remove();
+      });
     });
   });
-  

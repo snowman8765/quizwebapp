@@ -23,11 +23,17 @@ nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
             span.caret
           ul.dropdown-menu
             li
-              a.text-left(ng-href="/#/quiz/book") 問題集別
+              a.text-left(ng-href="/#/quiz/book")
+                span.glyphicon.glyphicon-book(aria-hidden="true")
+                | 問題集別
             li
-              a.text-left(ng-href="/#/quiz/genre") ジャンル別
+              a.text-left(ng-href="/#/quiz/genre")
+                span.glyphicon.glyphicon-briefcase(aria-hidden="true")
+                | ジャンル別
             li
-              a.text-left(ng-href="/#/quiz/tag") タグ別
+              a.text-left(ng-href="/#/quiz/tag")
+                span.glyphicon.glyphicon-tags(aria-hidden="true")
+                | タグ別
         li
           a.text-left(ng-href="/#/about")
             span.glyphicon.glyphicon-question-sign(aria-hidden="true")
@@ -36,6 +42,3 @@ nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
           a.text-left.hidden#logoutBtn(ng-href="/#/users/logout")
             span.glyphicon.glyphicon-log-out(aria-hidden="true")
             | ログアウト
-
-.alert.alert-info.message-area#broadcast(role="alert")
-  | zzzzzzz

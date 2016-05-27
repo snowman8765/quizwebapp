@@ -6,3 +6,9 @@ ctrls.controller("TopCtrl", ["$scope", "FaviconService",
     FaviconService.badge(3);
   }
 ]);
+
+ctrls.controller("ReloadCtrl", ["$window",
+  function($window){
+    $window.location.href = "/";
+  }
+]);

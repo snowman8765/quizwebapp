@@ -1,21 +1,26 @@
 var express = require("express");
-var session = require("express-session");
 var path = require("path");
+var moment = require("moment");
+var sqlite3 = require("sqlite3").verbose();
+var logDB = new sqlite3.Database("data/logs.db");
+
+// アプリケーションの設定
+var app = express();
+var compression = require('compression');
+app.use(compression({level: 6}));
+
+// 表示の設定
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
+if (process.env.NODE_ENV === "development") {
+  app.locals.pretty = true;
+}
+
+// デフォルトの設定
 var favicon = require("serve-favicon");
 var logger = require("morgan");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-var passport = require("passport");
-var flash = require("connect-flash");
-var moment = require("moment");
-
-var app = express();
-
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
-app.locals.pretty = true;
-
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, "www", "favicon.ico")));
 app.use(logger("dev"));
@@ -24,6 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "www")));
 
+// セッションや認証の設定
+var session = require("express-session");
+var passport = require("passport");
+var flash = require("connect-flash");
 app.use(session({
   secret: "secret snowman",
   resave: false,
@@ -33,30 +42,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-var index = require("./routes/index");
-var users = require("./routes/users");
-var quiz = require("./routes/quiz");
-app.use("/v", index);
-app.use("/v/users", users);
-app.use("/v/quiz", quiz);
-
 app.use(function(req, res, next){
   res.locals.user = req.user;
   next();
 });
 
+// アクセスログの設定
+app.use(function(req, res, next){
+  var millisec = moment().valueOf();
+  var time = moment(millisec).format("YYYY-MM-DD HH:mm:ss").toString();
+  var user = req.user ? req.user.id : "guest";
+  var query = JSON.stringify(req.query);
+  logDB.run("INSERT INTO log (time, action, user, ip, url, query, milliseconds) VALUES (?,?,?,?,?,?,?)", time, req.path, user, req.ip, req.originalUrl, query, millisec);
+  next();
+});
+
+// ルーティングの設定
+var index = require("./routes/index");
+var users = require("./routes/users");
+var quiz = require("./routes/quiz");
 app.get("/", function(req, res) {
   res.render("layout/index");
 });
+app.use("/v", index);
+app.use("/v/users", users);
+app.use("/v/quiz", quiz);
 
+// エラー関連の設定
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -81,10 +99,8 @@ app.use(function(err, req, res, next) {
 });
 
 
-
-
-
-var debug = require("debug")("testexpress:server");
+// サーバの設定
+var debug = require("debug")("quizwebapp2:server");
 var http = require("http");
 
 var port = normalizePort(process.env.PORT || 80);
@@ -92,15 +108,14 @@ app.set("port", port);
 
 var server = http.createServer(app);
 
+// socket.ioの設定
 var io = require("socket.io")(server);
 io.on("connection", function (socket) {
   console.log("connection.");
   
-  socket.broadcast.emit("user connected");
-  
   socket.on("login", function(msg){
     console.log("socket:login:"+msg);
-    io.emit("message", msg+"さんがログインしました。");
+    io.emit("broadcast", msg+"さんがログインしました。");
   });
   
   socket.on("message", function(msg){

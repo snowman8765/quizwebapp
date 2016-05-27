@@ -1,57 +1,44 @@
 var gulp = require("gulp");
 var nodemon = require("gulp-nodemon");
-var browserSync = require("browser-sync");
 var uglify = require("gulp-uglify");
 var concat = require("gulp-concat");
 var plumber = require("gulp-plumber");
+var cssmin = require("gulp-cssmin");
+var browserSync = require("browser-sync").create();
 var del = require("del");
 var runSequence = require("run-sequence");
-var cssmin = require("gulp-cssmin");
-
-function reload() {
-  browserSync.reload({ stream: false });
-};
 
 gulp.task("default", function(callback) {
-  return runSequence("clean", "min", "serve", "watch", callback);
+  return runSequence("clean", "min", "browser-sync", "watch", callback);
 });
 
-gulp.task("browsersync", function() {
-  browserSync.init({
-    files: ["www/**/*.*", "views/**/*.*"], // BrowserSyncにまかせるファイル群
-    proxy: "http://localhost",  // express の動作するポートにプロキシ
-    port: 4000,  // BrowserSync は 4000 番ポートで起動
-    open: false
+gulp.task("browser-sync", ["nodemon"], function() {
+  browserSync.init(null, {
+    proxy: "http://localhost",
+    port: 7000
   });
 });
 
-gulp.task("serve", ["browsersync"], function () {
-  nodemon({ 
+gulp.task("nodemon", function(cb) {
+  var called = false;
+
+  return nodemon({
     script: "app.js",
-    ext: "js html css",
-    ignore: [  // nodemon で監視しないディレクトリ
-      "node_modules",
-      "bin",
-      "views",
-      "www",
-      "test"
-    ],
-    env: {
-      "NODE_ENV": "development"
-    },
-    stdout: false  // Express の再起動時のログを監視するため
-  }).on("readable", function() {
-  this.stdout.on("data", function(chunk) {
-  if (/^Express\ server\ listening/.test(chunk)) {
-        // Express の再起動が完了したら、reload() でBrowserSync に通知。
-        // ※Express で出力する起動時のメッセージに合わせて比較文字列は修正
-        reload();
-      }
-      process.stdout.write(chunk);
-    });
-    this.stderr.on("data", function(chunk) {
-      process.stderr.write(chunk);
-    });
+    ext: "js html css jade", // 監視するファイルの拡張子
+    ignore: ["./www", "node_modules"]
+  })
+  .on("start", function() {
+    // サーバー起動時
+    if (!called) {
+      called = true;
+      cb();
+    }
+  })
+  .on("restart", function() {
+    // サーバー再起動時
+    setTimeout(function() {
+      browserSync.reload();
+    }, 500);
   });
 });
 
@@ -71,6 +58,14 @@ gulp.task("js.uglify", ["js.concat.angular"], function() {
     .pipe(gulp.dest("www/js/min/"));
 });
 
+// socket.io.jsを圧縮する
+gulp.task("js.uglify.socket.io", function() {
+  return gulp.src("node_modules/socket.io-client/socket.io.js")
+    .pipe(plumber())
+    .pipe(uglify())
+    .pipe(gulp.dest("www/lib/socket.io/"));
+});
+
 // cssファイルを圧縮する
 gulp.task("cssmin", function () {
   return gulp.src("www/css/src/*.css")
@@ -79,11 +74,11 @@ gulp.task("cssmin", function () {
 });
 
 // 監視して処理するのをひとまとめにしておく。
-gulp.task("min", ["js.concat.angular", "js.uglify", "cssmin"]);
+gulp.task("min", ["js.concat.angular", "js.uglify", "js.uglify.socket.io", "cssmin"]);
 
 // ファイルを監視して実行させる
 gulp.task("watch", function() {
-  gulp.watch(["www/js/src/*.js", "www/css/src/*.css"], ["min"]);
+  gulp.watch(["www/js/src/*.js", "www/css/src/*.css", "!www/js/src/ng.main.js"], ["min"]);
 });
 
 gulp.task("clean", del.bind(null, ["www/js/src/ng.main.js", "www/js/min/*", "www/css/min/*"]));

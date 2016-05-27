@@ -3,21 +3,36 @@
 
 ul.nav.nav-pills.dropup.hidden#main-footer
   li#home(role="presentation")
-    a(ng-href="/#/users/home") ホーム
+    a(ng-href="/#/users/home")
+      span.glyphicon.glyphicon-home(aria-hidden="true")
+      | ホーム
   li#config(role="presentation")
-    a(ng-href="/#/users/config") 設定
+    a(ng-href="/#/users/config")
+      span.glyphicon.glyphicon-cog(aria-hidden="true")
+      | 設定
   li#score(role="presentation")
-    a(ng-href="/#/users/score") 成績
+    a(ng-href="/#/users/score")
+      span.glyphicon.glyphicon-signal(aria-hidden="true")
+      | 成績
   li.dropdown(role="presentation")
     a.dropdown-toggle(data-toggle="dropdown", href="#", role="button", aria-haspopup="true", aria-expanded="false")
+      span.glyphicon.glyphicon-education(aria-hidden="true")
       | 学習
       span.caret
     ul.dropdown-menu
       li
-        a(ng-href="/#/quiz/book/list") 問題集別
+        a(ng-href="/#/quiz/book/list")
+          span.glyphicon.glyphicon-book(aria-hidden="true")
+          | 問題集別
       li
-        a(ng-href="/#/quiz/genre/list") ジャンル別
+        a(ng-href="/#/quiz/genre/list")
+          span.glyphicon.glyphicon-briefcase(aria-hidden="true")
+          | ジャンル別
       li
-        a(ng-href="/#/quiz/tag/list") タグ別
+        a(ng-href="/#/quiz/tag/list")
+          span.glyphicon.glyphicon-tags(aria-hidden="true")
+          | タグ別
 .well.well-sm#copy
   | 2016 &copy;aaa
+  a.pull-right(ng-href="/reload")
+    span.glyphicon.glyphicon-home(aria-hidden="true")
