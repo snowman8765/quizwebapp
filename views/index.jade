@@ -1,37 +1,43 @@
 //- 一番最初に表示する画面
 //- 全てのユーザが表示できる
 
-include _show_header
-.panel.panel-danger
-  .panel-heading
-    span.glyphicon.glyphicon-exclamation-sign
-    | 最初に
-  .panel-body
-    | これはオンライン上でクイズ形式の問題を解答することで学習するためのアプリケーションです。
-    br
-    | 誰(非ログイン)でも問題に解答することができますが、ユーザ登録することで成績を記録することができ、他のユーザと成績を競ったり学習状況を把握することができます。
-    br
-    | 問題を作成することも可能ですが、作成するためにはまず権限を得る申請が必要になります。
+include _hide_header
+nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0")
+  .navbar-header
+    a.navbar-brand(href="/") オンラインクイズアプリケーション 2.0
 
-ul.list-group
-  a.list-group-item(ng-href="/#/users/login")
-    span.glyphicon.glyphicon-log-in(aria-hidden="true")
-    | ログイン
-  a.list-group-item(ng-href="/#/users/signup")
-    span.glyphicon.glyphicon-plus-sign(aria-hidden="true")
-    | 新規登録
+.jumbotron
+  .panel.panel-info
+    .panel-heading
+      span.glyphicon.glyphicon-info-sign
+      | 最初に
+    .panel-body
+      | これはオンライン上でクイズ形式の問題を解答することで学習するためのアプリケーションです。
+      br
+      | 誰(非ログイン)でも問題に解答することができますが、ユーザ登録することで成績を記録することができ、他のユーザと成績を競ったり学習状況を把握することができます。
+      br
+      | 問題を作成することも可能ですが、作成するためにはまず権限を得る申請が必要になります。
 
-
-include _info_data
-- var num = 5;
-- var info_length = info.length;
-.panel.panel-primary
-  .panel-heading
-    span.glyphicon.glyphicon-info-sign
-    | 新着情報
-  ul.list-group
-    for val, index in info
-      if index < num
-        a.list-group-item(class="list-group-item-#{val.type}", ng-href="/#/info##{info_length--}")
-          span.badge.pull-left #{val.date}
-          h4.list-group-item-heading #{val.title}
+  .panel.panel-danger
+    .panel-heading
+      span.glyphicon.glyphicon-exclamation-sign
+      | 注意
+    .panel-body
+      | 登録した情報はこのアプリケーションの使用以外の目的では利用しません。
+      | 個人で作成しているため、バグが多かったりセキュリティ面が弱いかもしれません。個人情報やパスワードなどは注意してください。
+      br
+      | 2016年内には完成予定。。。かも知れません。
+      
+  .panel.panel-success
+    .panel-heading
+      span.glyphicon.glyphicon-star
+      | ようこそ
+    .panel-body
+      ul.list-group
+        form(method="post", name="guestUserForm", ng-submit="submitForm()")
+          input(type="hidden", name="guest", ng-value="true")
+          input.btn.btn-lg.btn-primary.btn-block(type="submit", value="ゲストで始める")
+        a.list-group-item.btn.btn-lg.btn-primary.btn-block(ng-href="/#/users/login")
+          | ログイン
+        a.list-group-item.btn.btn-lg.btn-primary.btn-block(ng-href="/#/users/signup")
+          | 新規登録

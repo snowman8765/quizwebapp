@@ -30,6 +30,11 @@ ctrls.controller("UserLoginCtrl", ["$scope", "$routeParams", "$http", "$location
     $scope.inputTitle = "ログイン情報";
     $scope.submitBtn = "ログイン";
     $scope.submitForm = function() {
+      console.log("UserLoginCtrl:submitForm():");
+      if(!$scope.user.userid) {
+        $scope.user.userid = "guest";
+        $scope.user.password = "guest";
+      }
       $http({
         method: "POST",
         url: "/v/users/login",

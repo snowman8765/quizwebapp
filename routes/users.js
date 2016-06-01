@@ -22,19 +22,24 @@ function isAuthenticated(req, res, next){
 }
 
 router.get("/", function(req, res) {
+  console.log("/users/");
   res.redirect("/home");
 });
 
 router.get("/home", isAuthenticated, function(req, res) {
+  console.log("/users/home");
+  //console.log(res);
   res.render("users/home");
 });
 
 router.get("/config", isAuthenticated, function(req, res) {
+  console.log("/users/config");
   res.render("users/config");
 });
 
 router.route("/signup")
 .get(function(req, res) {
+  console.log("/users/signup get");
   res.locals.result = {
     input_id: "",
     input_password: "",
@@ -43,7 +48,7 @@ router.route("/signup")
   res.render("users/login");
 })
 .post(function(req, res) {
-  console.log("post signup:");
+  console.log("/users/signup post");
   console.log(req.body);
   var userid = req.body.userid;
   var password = req.body.password;
@@ -86,7 +91,7 @@ router.route("/signup")
 
 router.route("/login")
 .get(function(req, res) {
-  //console.log("users:get /login:"+req.user);
+  console.log("/users/login get");
   res.locals.result = {
     input_id: "",
     input_password: "",
@@ -95,7 +100,7 @@ router.route("/login")
   res.render("users/login");
 })
 .post(passport.authenticate("local"), function(req, res) {
-  console.log("after login.");
+  console.log("/users/login post");
   var result = {};
   
   if(req.user) {
@@ -118,13 +123,13 @@ router.route("/login")
 });
 
 router.get("/logout", isAuthenticated, function(req, res){
-  console.log("get /logout:"+req.id);
-  //console.log(req);
+  console.log("/users/logout");
   req.logout();
   res.send("success logout.");
 });
 
 router.get("/:id", isAuthenticated, function(req, res) {
+  console.log("/users/:id");
   db.serialize(function(){
     db.get("SELECT "+SQL_USER_COLUMN+" FROM users WHERE id=?", req.params.id, function(err, rows){
       if (!err) {
@@ -157,6 +162,7 @@ passport.use(new LocalStrategy({usernameField: "userid", passwordField: "passwor
     var hash = hashPassword(password, row.salt);
     db.get("SELECT "+SQL_USER_COLUMN_WITH_PASSWORD+" FROM users WHERE id=? AND password=?", userid, hash, function(err, row) {
       if (!row) {
+        console.error("login error.:id="+userid);
         return done(null, false, {
           message: "パスワードが間違っています。",
           input_id: userid,

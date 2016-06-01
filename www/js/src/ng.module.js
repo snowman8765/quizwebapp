@@ -3,7 +3,8 @@ quizApp.config(["$routeProvider", function($routeProvider){
   
   .when("/", {
     templateUrl: "/v/index",
-    controller: "TopCtrl"
+    //controller: "TopCtrl"
+    controller: "UserLoginCtrl"
   })
   
   .when("/index", {

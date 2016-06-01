@@ -1,44 +1,179 @@
 //- 全ての画面に表示するヘッダー
 //- ログインしている場合は、ログアウトボタンなどを表示する
 
-nav.navbar.navbar-default.navbar-static-top.bg-primary#main-header
-  .container
+#main-header
+  nav.navbar.navbar-default.navbar-static-top(role="navigation", style="margin-bottom: 0")
     .navbar-header
-      button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+      button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
         span.sr-only Toggle navigation
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(ng-href="/#/index") オンラインクイズアプリケーション2
-    #navbar.navbar-collapse.collapse
-      ul.nav.navbar-nav.navbar-right
-        li
-          a.text-left(ng-href="/#/info")
-            span.glyphicon.glyphicon-info-sign(aria-hidden="true")
-            | 情報
-        li.dropdown(role="presentation")
-          a.dropdown-toggle(data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false")
-            span.glyphicon.glyphicon-education(aria-hidden="true")
-            | 学習
-            span.caret
-          ul.dropdown-menu
-            li
-              a.text-left(ng-href="/#/quiz/book")
-                span.glyphicon.glyphicon-book(aria-hidden="true")
-                | 問題集別
-            li
-              a.text-left(ng-href="/#/quiz/genre")
-                span.glyphicon.glyphicon-briefcase(aria-hidden="true")
-                | ジャンル別
-            li
-              a.text-left(ng-href="/#/quiz/tag")
-                span.glyphicon.glyphicon-tags(aria-hidden="true")
-                | タグ別
-        li
-          a.text-left(ng-href="/#/about")
-            span.glyphicon.glyphicon-question-sign(aria-hidden="true")
-            | アプリについて
-        li
-          a.text-left.hidden#logoutBtn(ng-href="/#/users/logout")
-            span.glyphicon.glyphicon-log-out(aria-hidden="true")
-            | ログアウト
+      a.navbar-brand(href="/") オンラインクイズアプリケーション 2.0
+    ul.nav.navbar-top-links.navbar-right
+      //- メール管理
+      li.dropdown
+        a.dropdown-toggle(data-toggle="dropdown", href="#")
+          i.fa.fa-envelope.fa-fw
+          i.fa.fa-caret-down
+        ul.dropdown-menu.dropdown-messages
+          li
+            a(href="#")
+              div
+                strong John Smith
+                span.pull-right.text-muted
+                  em Yesterday
+              div
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...
+          li.divider
+          li
+            a(href="#")
+              div
+                strong John Smith
+                span.pull-right.text-muted
+                  em Yesterday
+              div
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...
+          li.divider
+          li
+            a(href="#")
+              div
+                strong John Smith
+                span.pull-right.text-muted
+                  em Yesterday
+              div
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...
+          li.divider
+          li
+            a.text-center(href="#")
+              strong Read All Messages
+              i.fa.fa-angle-right
+      
+      //- タスク管理
+      li.dropdown
+        a.dropdown-toggle(data-toggle="dropdown", href="#")
+          i.fa.fa-tasks.fa-fw
+          i.fa.fa-caret-down
+        ul.dropdown-menu.dropdown-tasks
+          li
+            a(href="#")
+              div
+                p
+                  strong Task 1
+                  span.pull-right.text-muted 40% Complete
+                .progress.progress-striped.active
+                  .progress-bar.progress-bar-success(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
+                    span.sr-only 40% Complete (success)
+          li.divider
+          li
+            a(href="#")
+              div
+                p
+                  strong Task 2
+                  span.pull-right.text-muted 20% Complete
+                .progress.progress-striped.active
+                  .progress-bar.progress-bar-info(role="progressbar", aria-valuenow="20", aria-valuemin="0", aria-valuemax="100", style="width: 20%")
+                    span.sr-only 20% Complete
+          li.divider
+          li
+            a(href="#")
+              div
+                p
+                  strong Task 3
+                  span.pull-right.text-muted 60% Complete
+                .progress.progress-striped.active
+                  .progress-bar.progress-bar-warning(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", style="width: 60%")
+                    span.sr-only 60% Complete (warning)
+          li.divider
+          li
+            a(href="#")
+              div
+                p
+                  strong Task 4
+                  span.pull-right.text-muted 80% Complete
+                .progress.progress-striped.active
+                  .progress-bar.progress-bar-danger(role="progressbar", aria-valuenow="80", aria-valuemin="0", aria-valuemax="100", style="width: 80%")
+                    span.sr-only 80% Complete (danger)
+          li.divider
+          li
+            a.text-center(href="#")
+              strong See All Tasks
+              i.fa.fa-angle-right
+
+      //- メッセージ管理
+      include ../_info_data
+      - var num = 5;
+      - var info_length = info.length;
+      li.dropdown
+        a.dropdown-toggle(data-toggle="dropdown", href="#")
+          i.fa.fa-bell.fa-fw
+          i.fa.fa-caret-down
+        ul.dropdown-menu.dropdown-alerts
+          for val, index in info
+            if index < num
+              a.list-group-item(class="list-group-item-#{val.type}", ng-href="/#/info##{info_length--}")
+                span.badge.pull-left #{val.date}
+                p.list-group-item-heading.text-muted #{val.title}
+
+      //- ユーザ管理
+      li.dropdown
+        a.dropdown-toggle(data-toggle="dropdown", href="#")
+          i.fa.fa-user.fa-fw
+          i.fa.fa-caret-down
+        ul.dropdown-menu.dropdown-user
+          li
+            a(ng-href="/#/users/home")
+              i.fa.fa-home.fa-fw
+              |  ホーム
+          li
+            a(ng-href="/#/users/config")
+              i.fa.fa-gear.fa-fw
+              |  設定
+          li.divider
+          li
+            a(ng-href="/#/users/logout")
+              i.fa.fa-sign-out.fa-fw
+              |  ログアウト
+
+    //- メニューバー
+    .navbar-default.sidebar(role="navigation")
+      .sidebar-nav.navbar-collapse
+        ul#side-menu.nav
+          li.sidebar-search
+            .input-group.custom-search-form
+              input.form-control(type="text", placeholder="検索...")
+              span.input-group-btn
+                button.btn.btn-default(type="button")
+                  i.fa.fa-search
+          li
+            a(ng-href="/#/users/home")
+              i.fa.fa-dashboard.fa-fw
+              | ダッシュボード
+          li
+            a(href="#")
+              i.fa.fa-bar-chart-o.fa-fw
+              | 成績
+              span.fa.arrow
+            ul.nav.nav-second-level
+              li
+                a(ng-href="/#/users/score") 個人成績
+              li
+                a(ng-href="/#/users/ranking") ランキング
+          li
+            a(href="#")
+              i.glyphicon.glyphicon-education(aria-hidden="true")
+              | 学習
+              span.fa.arrow
+            ul.nav.nav-second-level
+              li
+                a(ng-href="/#/quiz/book/list")
+                  i.glyphicon.glyphicon-book(aria-hidden="true")
+                  | 問題集別
+              li
+                a(ng-href="/#/quiz/genre/list")
+                  i.glyphicon.glyphicon-briefcase(aria-hidden="true")
+                  | ジャンル別
+              li
+                a(ng-href="/#/quiz/tag/list")
+                  i.glyphicon.glyphicon-tags(aria-hidden="true")
+                  | タグ別

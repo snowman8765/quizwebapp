@@ -12,9 +12,7 @@ app.use(compression({level: 6}));
 // 表示の設定
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-if (process.env.NODE_ENV === "development") {
-  app.locals.pretty = true;
-}
+app.locals.pretty = true;
 
 // デフォルトの設定
 var favicon = require("serve-favicon");
@@ -43,7 +41,17 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(function(req, res, next){
-  res.locals.user = req.user;
+  console.log("app.use /*:session");
+  console.log(req);
+  if(req.user) {
+    console.log("set request user.");
+    res.locals.user = req.user;
+  } else if(req.session.user) {
+    console.log("set session user.");
+    res.locals.user = req.session.user;
+  } else {
+    res.locals.user = {};
+  }
   next();
 });
 
@@ -51,7 +59,7 @@ app.use(function(req, res, next){
 app.use(function(req, res, next){
   var millisec = moment().valueOf();
   var time = moment(millisec).format("YYYY-MM-DD HH:mm:ss").toString();
-  var user = req.user ? req.user.id : "guest";
+  var user = req.session.user ? req.session.user.id : "guest";
   var query = JSON.stringify(req.query);
   logDB.run("INSERT INTO log (time, action, user, ip, url, query, milliseconds) VALUES (?,?,?,?,?,?,?)", time, req.path, user, req.ip, req.originalUrl, query, millisec);
   next();
@@ -61,12 +69,14 @@ app.use(function(req, res, next){
 var index = require("./routes/index");
 var users = require("./routes/users");
 var quiz = require("./routes/quiz");
-app.get("/", function(req, res) {
-  res.render("layout/index");
-});
 app.use("/v", index);
 app.use("/v/users", users);
 app.use("/v/quiz", quiz);
+app.get("/*", function(req, res) {
+  console.log("get /.");
+  console.log(req.session.user);
+  res.render("layout/index");
+});
 
 // エラー関連の設定
 // catch 404 and forward to error handler
