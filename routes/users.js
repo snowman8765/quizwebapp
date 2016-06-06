@@ -49,7 +49,6 @@ router.route("/signup")
 })
 .post(function(req, res) {
   console.log("/users/signup post");
-  console.log(req.body);
   var userid = req.body.userid;
   var password = req.body.password;
   var currenttime = moment().format("YYYY-MM-DD HH:mm:ss").toString();
@@ -58,7 +57,6 @@ router.route("/signup")
     input_id: userid,
     input_password: password
   };
-  console.log(currenttime);
   
   if(userid=="" || password=="") {
     result.flag = false;
@@ -67,7 +65,6 @@ router.route("/signup")
     db.serialize(function(){
       db.get("SELECT * FROM users WHERE id=?", userid, function(err, row) {
         console.log("post signup:search userid.");
-        console.log(row);
         if (row) {
           console.log("find user.");
           result.flag = false;

@@ -1,61 +1,73 @@
-ctrls.controller("UserCtrl", ["$scope", function($scope) {
-}]);
-
-ctrls.controller("UserSignupCtrl", ["$scope", "$routeParams", "$http", "$location",
-  function($scope, $routeParams, $http, $location) {
-    $scope.user = {};
-    $scope.inputTitle = "登録情報";
-    $scope.submitBtn = "登録";
-    $scope.submitForm = function() {
-      console.log($scope.user);
-      $http({
+/** ユーザに関するコントローラ用クラス
+ */
+export default class UserController {
+  constructor($scope, $http, $location) {
+    this.$scope = $scope;
+  }
+  
+  static activate($scope, $http, $location) {
+    UserController.instance = new UserController($scope, $http, $location);
+    return UserController.instance;
+  }
+  
+  signup() {
+    this.user = {};
+    this.inputTitle = "登録情報";
+    this.submitBtn = "登録";
+    
+    let self = this;
+    this.submitForm = function() {
+      console.log(self.user);
+      self.$http({
         method: "POST",
         url: "/v/users/signup",
         data: $.param({
-          userid: $scope.user.userid,
-          password: $scope.user.password
+          userid: self.user.userid,
+          password: self.user.password
         }),
         headers: {"Content-Type": "application/x-www-form-urlencoded"}
         
       }).success(function(data) {
-        $scope.result = data;
+        self.result = data;
       });
     };
   }
-]);
-
-ctrls.controller("UserLoginCtrl", ["$scope", "$routeParams", "$http", "$location",
-  function($scope, $routeParams, $http, $location) {
-    $scope.user = {};
-    $scope.inputTitle = "ログイン情報";
-    $scope.submitBtn = "ログイン";
-    $scope.submitForm = function() {
+  
+  login(){
+    this.user = {};
+    this.inputTitle = "ログイン情報";
+    this.submitBtn = "ログイン";
+    this.result = {};
+    
+    let self = this;
+    this.submitForm = function() {
       console.log("UserLoginCtrl:submitForm():");
-      if(!$scope.user.userid) {
-        $scope.user.userid = "guest";
-        $scope.user.password = "guest";
+      if(!self.user.userid) {
+        self.user.userid = "guest";
+        self.user.password = "guest";
       }
       $http({
         method: "POST",
         url: "/v/users/login",
         data: $.param({
-          userid: $scope.user.userid,
-          password: $scope.user.password
+          userid: self.user.userid,
+          password: self.user.password
         }),
         headers: {"Content-Type": "application/x-www-form-urlencoded"}
         
       }).success(function(data) {
-        $scope.result = data;
+        self.result = data;
         if(data.flag) {
-          $location.path("/users/home");
+          self.$location.path("/users/home");
           socket.emit("login", data.displayname);
         }
       });
     };
   }
-]);
-
-ctrls.controller("UserLogoutCtrl", ["$scope", "$location", function($scope, $location) {
-  $location.path("/");
-  hideUserInfo();
-}]);
+  
+  logout() {
+    this.$location.path("/");
+    hideUserInfo();
+  }
+}
+UserController.$inject = ["$scope", "$http", "$location"];

@@ -1,12 +1,17 @@
-var quizApp = angular.module("quizApp", [
-  "ngRoute",
-  "quizApp.Controllers",
-  "quizApp.Services"
-]);
+/** アプリの設定
+ */
+export default class QuizAppConfig {
+  constructor($locationProvider) {
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+  }
+  
+  static activate($locationProvider) {
+    QuizAppConfig.instance = new QuizAppConfig($locationProvider);
+    return QuizAppConfig.instance;
+  }
+}
 
-quizApp.config(["$locationProvider", function($locationProvider) {
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
-}]);
+QuizAppConfig.$inject = ["$locationProvider"];

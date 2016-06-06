@@ -1,14 +1,12 @@
-var ctrls = angular.module("quizApp.Controllers", []);
+/** アプリのコントローラ全般
+ */
+//import angular from "../../lib/angular-1.5.5/angular";
+import TopController from "./ng.controller.top";
+import QuizController from "./ng.controller.quiz";
+import UserController from "./ng.controller.user";
 
-ctrls.controller("TopCtrl", ["$scope", "FaviconService",
-  function($scope, FaviconService) {
-    //console.log("TopCtrl:");
-    FaviconService.badge(3);
-  }
-]);
+export var ctrls = angular.module("quizApp.Controllers", []);
 
-ctrls.controller("ReloadCtrl", ["$window",
-  function($window){
-    $window.location.href = "/";
-  }
-]);
+ctrls.controller(TopController.name, TopController);
+ctrls.controller(QuizController.name, QuizController);
+ctrls.controller(UserController.name, UserController);

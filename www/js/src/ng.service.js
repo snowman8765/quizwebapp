@@ -1,15 +1,8 @@
-var srvcs = angular.module("quizApp.Services", []);
+/** アプリのコントローラ全般
+ */
+//import angular from "../../lib/angular-1.5.5/angular";
+import FaviconService from "./ng.service.favicon";
 
-srvcs.factory("FaviconService", function(){
-  var favicon = new Favico({
-    //animationを切る
-    animation: "pop"
-  });
-  var badge = function(num){
-    favicon.badge(num);
-  };
+export var srvcs = angular.module("quizApp.Services", []);
 
-  return {
-    badge: badge
-  };
-});
+srvcs.factory(FaviconService.name, FaviconService.activate);

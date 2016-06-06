@@ -42,7 +42,6 @@ app.use(flash());
 
 app.use(function(req, res, next){
   console.log("app.use /*:session");
-  console.log(req);
   if(req.user) {
     console.log("set request user.");
     res.locals.user = req.user;
@@ -74,7 +73,6 @@ app.use("/v/users", users);
 app.use("/v/quiz", quiz);
 app.get("/*", function(req, res) {
   console.log("get /.");
-  console.log(req.session.user);
   res.render("layout/index");
 });
 
