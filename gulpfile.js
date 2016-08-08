@@ -16,9 +16,8 @@ gulp.task("default", function(callback) {
 });
 
 gulp.task("browser-sync", ["nodemon"], function() {
-  browserSync.init(null, {
-    proxy: "http://localhost",
-    port: 8088
+  browserSync.init({
+    proxy: "http://localhost:8080"
   });
 });
 
