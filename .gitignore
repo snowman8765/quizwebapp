@@ -5,3 +5,4 @@ www/js/min
 www/js/src/ng.main.js
 releases
 irasutoya
+*.js.map

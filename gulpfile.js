@@ -1,9 +1,12 @@
+"use strict";
+
 var gulp = require("gulp");
 var nodemon = require("gulp-nodemon");
 var uglify = require("gulp-uglify");
 var concat = require("gulp-concat");
 var plumber = require("gulp-plumber");
 var cssmin = require("gulp-cssmin");
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require("browser-sync").create();
 var del = require("del");
 var runSequence = require("run-sequence");
@@ -15,7 +18,7 @@ gulp.task("default", function(callback) {
 gulp.task("browser-sync", ["nodemon"], function() {
   browserSync.init(null, {
     proxy: "http://localhost",
-    port: 7000
+    port: 8088
   });
 });
 
@@ -23,23 +26,23 @@ gulp.task("nodemon", function(cb) {
   var called = false;
 
   return nodemon({
-    script: "app.js",
-    ext: "js html css jade", // 監視するファイルの拡張子
-    ignore: ["./www", "node_modules"]
-  })
-  .on("start", function() {
-    // サーバー起動時
-    if (!called) {
-      called = true;
-      cb();
-    }
-  })
-  .on("restart", function() {
-    // サーバー再起動時
-    setTimeout(function() {
-      browserSync.reload();
-    }, 500);
-  });
+      script: "app.js",
+      ext: "js html css jade", // 監視するファイルの拡張子
+      ignore: ["./www", "node_modules"]
+    })
+    .on("start", function() {
+      // サーバー起動時
+      if (!called) {
+        called = true;
+        cb();
+      }
+    })
+    .on("restart", function() {
+      // サーバー再起動時
+      setTimeout(function() {
+        browserSync.reload();
+      }, 500);
+    });
 });
 
 // AngularJS用のjavascriptファイルをまとめる
@@ -53,8 +56,10 @@ gulp.task("js.concat.angular", function() {
 // javascriptファイルを圧縮する
 gulp.task("js.uglify", ["js.concat.angular"], function() {
   return gulp.src("www/js/src/*.js")
+    .pipe(sourcemaps.init())
     .pipe(plumber())
     .pipe(uglify())
+    .pipe(sourcemaps.write("./", { includeContent: false, sourceRoot: '../src/' }))
     .pipe(gulp.dest("www/js/min/"));
 });
 
@@ -67,7 +72,7 @@ gulp.task("js.uglify.socket.io", function() {
 });
 
 // cssファイルを圧縮する
-gulp.task("cssmin", function () {
+gulp.task("cssmin", function() {
   return gulp.src("www/css/src/*.css")
     .pipe(cssmin())
     .pipe(gulp.dest("www/css/min/"));
@@ -83,7 +88,7 @@ gulp.task("watch", function() {
 
 gulp.task("clean", del.bind(null, ["www/js/src/ng.main.js", "www/js/min/*", "www/css/min/*"]));
 
-gulp.task("package", ["clean", "min"], function (done) {
+gulp.task("package", ["clean", "min"], function(done) {
   var packager = require("electron-packager");
   var pkg = require("./package.json");
   packager({
@@ -99,7 +104,7 @@ gulp.task("package", ["clean", "min"], function (done) {
     //prune: true,
     "app-version": pkg.version,
     ignore: []
-  }, function (err, path) {
+  }, function(err, path) {
     if (err) {
       console.error(err);
     }
